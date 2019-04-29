@@ -15,14 +15,17 @@ const drawBackground = (bg, ctx, sprites) => {
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
 
-loadImage(`/assets/tileset.png`)
-  .then((img) => {
-    const sprites = new Spritesheet(img, 16, 16)
-    sprites.define(`ground`, 0, 0)
-    sprites.define(`sky`, 3, 23)
+const loadBackgroundSprites = () => {
+  return loadImage(`/assets/tileset.png`)
+    .then((img) => {
+      const sprites = new Spritesheet(img, 16, 16)
+      sprites.define(`ground`, 0, 0)
+      sprites.define(`sky`, 3, 23)
+      return sprites
+  })
+}
 
-    loadLevel(`1-1`)
-      .then((lvl) => {
-        lvl.backgrounds.forEach((bg) => drawBackground(bg, ctx, sprites))
-      })
+Promise.all([loadBackgroundSprites(), loadLevel(`1-1`)])
+  .then(([ sprites, lvl ]) => {
+    lvl.backgrounds.forEach((bg) => drawBackground(bg, ctx, sprites))
   })
