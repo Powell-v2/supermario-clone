@@ -1,4 +1,5 @@
 `use strict`
+
 class Spritesheet {
   constructor(img, width, height) {
     this.img = img

@@ -1,3 +1,5 @@
+`use strict`
+
 class Compositor {
   constructor() {
     this.layers = []

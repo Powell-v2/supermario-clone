@@ -1,3 +1,5 @@
+`use strict`
+
 const PRESSED = 1
 const RELEASED = 0
 

@@ -1,3 +1,5 @@
+`use strict`
+
 class Timer {
   constructor(delta = 1/60) {
     let accumulatedTime = 0

@@ -1,4 +1,5 @@
 `use strict`
+
 class Vector2 {
   constructor(x, y) {
     this.set(x, y)
@@ -10,7 +11,7 @@ class Vector2 {
   }
 }
 
-export class Trait {
+class Trait {
   constructor(name) {
     this.NAME = name
   }
@@ -38,4 +39,7 @@ class Entity {
   }
 }
 
-export default Entity
+export {
+  Entity as default,
+  Trait,
+}
