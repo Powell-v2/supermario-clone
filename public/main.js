@@ -9,6 +9,10 @@ import { loadLevel } from './loaders.js'
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
 
+const SPACE = 32
+const RIGHT_ARROW = 39
+const LEFT_ARROW = 37
+
 Promise.all([
   createMario(),
   loadLevel(`1-1`)
@@ -18,11 +22,16 @@ Promise.all([
 
     createCollisionLayer(lvl)
 
-    const SPACE = 32
     const keyboardInput = new Keyboard()
     keyboardInput.mapAction(SPACE, (state) => {
       if (state) mario.jump.start()
       else mario.jump.cancel()
+    })
+    keyboardInput.mapAction(RIGHT_ARROW, (state) => {
+      mario.walk.direction = state
+    })
+    keyboardInput.mapAction(LEFT_ARROW, (state) => {
+      mario.walk.direction = -state
     })
     keyboardInput.listenTo(window)
 
