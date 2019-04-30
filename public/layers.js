@@ -38,8 +38,15 @@ const createCollisionLayer = (lvl) => {
     resolvedTiles.forEach(({ x, y }) => {
       ctx.beginPath()
       ctx.rect(x * tileSize, y * tileSize, tileSize, tileSize)
+      ctx.stroke()
     })
-    ctx.stroke()
+
+    ctx.strokeStyle = `red`
+    lvl.entities.forEach(({ pos, size }) => {
+      ctx.beginPath()
+      ctx.rect(pos.x, pos.y, size.x, size.y)
+      ctx.stroke()
+    })
 
     resolvedTiles.length = 0
   }

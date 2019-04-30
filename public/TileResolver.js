@@ -10,6 +10,20 @@ class TileResolver {
     return Math.floor(pos / this.tileSize)
   }
 
+  toIndexRange(pos1, pos2) {
+    const pMax = Math.ceil(pos2 / this.tileSize) * this.tileSize
+
+    let range = []
+    let pos = pos1
+
+    do {
+      range.push(this.toIndex(pos))
+      pos += this.tileSize
+    } while (pos < pMax)
+
+    return range
+  }
+
   getByIndex(x, y) {
     const tile = this.matrix.get(x, y)
 
@@ -25,8 +39,21 @@ class TileResolver {
     }
   }
 
-  matchByPosition(x, y) {
+  searchByPosition(x, y) {
     return this.getByIndex(this.toIndex(x), this.toIndex(y))
+  }
+
+  searchByRange(x1, x2, y1, y2) {
+    let matches = []
+    this.toIndexRange(x1, x2).forEach((idxX) => {
+      this.toIndexRange(y1, y2).forEach((idxY) => {
+        const match = this.getByIndex(idxX, idxY)
+
+        if (match) matches.push(match)
+      })
+    })
+
+    return matches
   }
 }
 

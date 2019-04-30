@@ -7,24 +7,28 @@ class TileCollider {
   }
 
   checkY(entity) {
-    const { pos, vel } = entity
-    const match = this.tiles.matchByPosition(pos.x, pos.y)
+    const { pos, vel, size } = entity
+    const matches = this.tiles.searchByRange(
+      pos.x, pos.x + size.x,
+      pos.y, pos.y + size.y
+    )
 
-    if (!match) return
-    if (match.tile.name !== `ground`) return
+    matches.forEach((match) => {
+      if (match.tile.name !== `ground`) return
 
-    if (vel.y > 0) {
-      if (pos.y > match.yTop) {
-        pos.y = match.yTop
-        vel.y = 0
+      if (vel.y > 0) {
+        if (pos.y + size.y > match.yTop) {
+          pos.y = match.yTop - size.y
+          vel.y = 0
+        }
       }
-    }
-    else if (vel.y < 0) {
-      if (pos.y < match.yBottom) {
-        pos.y = match.yBottom
-        vel.y = 0
+      else if (vel.y < 0) {
+        if (pos.y < match.yBottom) {
+          pos.y = match.yBottom
+          vel.y = 0
+        }
       }
-    }
+    })
   }
 }
 
