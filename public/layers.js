@@ -1,21 +1,13 @@
 `use strict`
-const drawBackground = (bg, ctx, sprites) => {
-  bg.ranges.forEach(({ x: [x1, x2], y: [y1, y2] }) => {
-    for (let x = x1; x < x2; x += 1) {
-      for (let y = y1; y < y2; y += 1) {
-        sprites.drawTile(bg.tile, ctx, x, y)
-      }
-    }
-  })
-}
 
-const createBackgroundLayer = (backgrounds, sprites) => {
+const createBackgroundLayer = (lvl, sprites) => {
   const buff = document.createElement(`canvas`)
+  const ctx = buff.getContext(`2d`)
   buff.width = 256
   buff.height = 240
 
-  backgrounds.forEach((bg) => {
-    drawBackground(bg, buff.getContext(`2d`), sprites)
+  lvl.tiles.forEach((tile, x, y) => {
+    sprites.drawTile(tile.name, ctx, x, y)
   })
 
   return function drawBackgroundLayer(ctx) {
@@ -23,9 +15,9 @@ const createBackgroundLayer = (backgrounds, sprites) => {
   }
 }
 
-const createSpriteLayer = (entity) => {
+const createSpriteLayer = (entities) => {
   return function drawSpriteLayer(ctx) {
-    entity.draw(ctx)
+    entities.forEach((ent) => ent.draw(ctx))
   }
 }
 
