@@ -14,7 +14,6 @@ function createMario() {
 
     mario.addTrait(new Jump())
     mario.addTrait(new Walk())
-    mario.addTrait(new Velocity())
 
     mario.draw = function(ctx) {
       sprite.draw(`idle`, ctx, this.pos.x, this.pos.y)

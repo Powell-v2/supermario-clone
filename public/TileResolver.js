@@ -30,9 +30,13 @@ class TileResolver {
     if (tile) {
       const yTop = y * this.tileSize
       const yBottom = yTop + this.tileSize
+      const xLeft = x * this.tileSize
+      const xRight = xLeft + this.tileSize
 
       return {
         tile,
+        xLeft,
+        xRight,
         yTop,
         yBottom,
       }
