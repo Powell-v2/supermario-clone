@@ -23,9 +23,9 @@ const createBackgroundLayer = (backgrounds, sprites) => {
   }
 }
 
-const createSpriteLayer = (sprite, pos) => {
+const createSpriteLayer = (entity) => {
   return function drawSpriteLayer(ctx) {
-    sprite.draw(`idle`, ctx, pos.x, pos.y)
+    entity.draw(ctx)
   }
 }
 
