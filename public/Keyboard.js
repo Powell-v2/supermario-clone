@@ -14,19 +14,19 @@ class Keyboard {
   }
 
   handleEvent(ev) {
-    const { keyCode, type } = ev
+    const { code, type } = ev
 
-    if (!this.actions.has(keyCode)) return
+    if (!this.actions.has(code)) return
 
     ev.preventDefault()
 
     const state = (type === `keydown`) ? PRESSED : RELEASED
 
-    if (this.states.get(keyCode) === state) return
+    if (this.states.get(code) === state) return
 
-    this.states.set(keyCode, state)
+    this.states.set(code, state)
 
-    this.actions.get(keyCode)(state)
+    this.actions.get(code)(state)
   }
 
   listenTo(window) {
