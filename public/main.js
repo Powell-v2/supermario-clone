@@ -1,40 +1,50 @@
 `use strict`
-import Compositor from './Compositor.js'
-import Entity from './Entity.js'
+import Keyboard from './Keyboard.js'
 import Timer from './Timer.js'
 
 import { createMario } from './entities.js'
-import { createBackgroundLayer, createSpriteLayer } from './layers.js'
+import { createCollisionLayer } from './layers.js'
 import { loadLevel } from './loaders.js'
-import { loadBackgroundSprites } from './sprites.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
 
 Promise.all([
   createMario(),
-  loadBackgroundSprites(),
   loadLevel(`1-1`)
-])
-  .then(([ mario, bgSprites, lvl ]) => {
-    const comp = new Compositor()
-    const bgLayer = createBackgroundLayer(lvl.backgrounds, bgSprites)
-    comp.layers.push(bgLayer)
-
+]).then(([ mario, lvl ]) => {
+    lvl.entities.add(mario)
     const gravity = 1500
 
-    mario.pos.set(64, 180)
-    mario.vel.set(150, -500)
+    createCollisionLayer(lvl)
 
-    const spriteLayer = createSpriteLayer(mario)
-    comp.layers.push(spriteLayer)
+    const SPACE = 32
+    const keyboardInput = new Keyboard()
+    keyboardInput.mapAction(SPACE, (state) => {
+      if (state) mario.jump.start()
+      else mario.jump.cancel()
+    })
+    keyboardInput.listenTo(window)
+
+    const events = [`mousedown`, `mousemove`]
+
+    events.forEach((type) => {
+      scene.addEventListener(type, (ev) => {
+        if (ev.buttons === 1) {
+          mario.vel.set(0, 0)
+          mario.pos.set(ev.offsetX, ev.offsetY)
+        }
+      })
+    })
+
+    mario.pos.set(64, 180)
 
     const timer = new Timer()
 
     timer.update = function(delta) {
-      mario.update(delta)
-      
-      comp.draw(ctx)
+      lvl.update(delta)
+
+      lvl.comp.draw(ctx)
 
       mario.vel.y += gravity * delta
     }

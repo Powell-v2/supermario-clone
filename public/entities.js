@@ -9,8 +9,8 @@ function createMario() {
   return loadMarioSprite().then((sprite) => {
     const mario = new Entity()
 
-    mario.addTrait(new Velocity())
     mario.addTrait(new Jump())
+    mario.addTrait(new Velocity())
 
     mario.draw = function(ctx) {
       sprite.draw(`idle`, ctx, this.pos.x, this.pos.y)

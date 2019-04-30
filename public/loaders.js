@@ -1,7 +1,11 @@
 `use strict`
 import Level from './Level.js'
 
-import { createBackgroundLayer, createSpriteLayer } from './layers.js'
+import {
+  createBackgroundLayer,
+  createSpriteLayer,
+  createCollisionLayer,
+} from './layers.js'
 import { loadBackgroundSprites } from './sprites.js'
 
 const loadImage = (url) => {
@@ -35,7 +39,8 @@ const loadLevel = (name) => {
 
     lvl.comp.layers.push(
       createBackgroundLayer(lvl, bgSprites),
-      createSpriteLayer(lvl.entities)
+      createSpriteLayer(lvl.entities),
+      createCollisionLayer(lvl),
     )
 
     return lvl
