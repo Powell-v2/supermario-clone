@@ -1,12 +1,16 @@
 `use strict`
 import Level from './Level.js'
+import Spritesheet from './Spritesheet.js'
 
 import {
   createBackgroundLayer,
   createSpriteLayer,
   createCollisionLayer,
 } from './layers.js'
-import { loadBackgroundSprites } from './sprites.js'
+
+function loadJson(url) {
+  return fetch(url).then((r) => r.json())
+}
 
 const loadImage = (url) => {
   return new Promise((resolve) => {
@@ -17,34 +21,60 @@ const loadImage = (url) => {
 }
 
 const createTiles = (lvl, bgs) => {
+  function applyRange(bg, xStart, xLen, yStart, yLen ) {
+    const xEnd = xStart + xLen
+    const yEnd = yStart + yLen
+
+    for (let x = xStart; x < xEnd; x += 1) {
+      for (let y = yStart; y < yEnd; y += 1) {
+        lvl.tiles.set(x, y, { name: bg.tile })
+      }
+    }
+  }
+
   bgs.forEach((bg) => {
-    bg.ranges.forEach(({ x: [x1, x2], y: [y1, y2] }) => {
-      for (let x = x1; x < x2; x += 1) {
-        for (let y = y1; y < y2; y += 1) {
-          lvl.tiles.set(x, y, { name: bg.tile })
-        }
+    bg.ranges.forEach((range) => {
+      if (range.length === 4) {
+        applyRange(bg, ...range)
+      }
+      else if (range.length === 3) {
+        const [xStart, xLen, yStart] = range
+        applyRange(bg, xStart, xLen, yStart, 1)
+      }
+      else if (range.length === 2) {
+        const [xStart, yStart] = range
+        applyRange(bg, xStart, 1, yStart, 1)
       }
     })
   })
 }
 
-const loadLevel = (name) => {
-  return Promise.all([
-    loadBackgroundSprites(),
-    fetch(`/levels/${name}.json`).then((r) => r.json())
-  ]).then(([ bgSprites, lvlSpec ]) => {
-    const lvl = new Level()
+async function loadSpritesheet (name) {
+  const { imageURL, tiles, tileW, tileH } = await loadJson(`/sprites/${name}.json`)
+  const img = await loadImage(imageURL)
 
-    createTiles(lvl, lvlSpec.backgrounds)
+  const sprites = new Spritesheet(img, tileW, tileH)
 
-    lvl.comp.layers.push(
-      createBackgroundLayer(lvl, bgSprites),
-      createSpriteLayer(lvl.entities),
-      createCollisionLayer(lvl),
-    )
+  tiles.forEach(({ name, index: [x,y] }) => sprites.defineTile(name, x, y))
 
-    return lvl
-  })
+  return sprites
+}
+
+async function loadLevel(name) {
+  const lvlSpec = await loadJson(`/levels/${name}.json`)
+  const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
+
+  const lvl = new Level()
+
+  createTiles(lvl, lvlSpec.backgrounds)
+
+  lvl.comp.layers.push(
+    createBackgroundLayer(lvl, bgSprites),
+    createSpriteLayer(lvl.entities),
+    createCollisionLayer(lvl),
+  )
+
+  return lvl
 }
 
 export {

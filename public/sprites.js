@@ -2,16 +2,6 @@
 import { loadImage } from './loaders.js'
 import Spritesheet from './Spritesheet.js'
 
-const loadBackgroundSprites = () => {
-  return loadImage(`/assets/backgrounds.png`)
-    .then((bgs) => {
-      const sprites = new Spritesheet(bgs, 16, 16)
-      sprites.defineTile(`ground`, 0, 0)
-      sprites.defineTile(`sky`, 3, 23)
-      return sprites
-  })
-}
-
 const loadMarioSprite = () => {
   return loadImage(`/assets/characters.gif`)
     .then((chars) => {
@@ -22,6 +12,5 @@ const loadMarioSprite = () => {
 }
 
 export {
-  loadBackgroundSprites,
   loadMarioSprite,
 }
