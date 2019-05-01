@@ -1,15 +1,5 @@
 `use strict`
-
-class Vector2 {
-  constructor(x, y) {
-    this.set(x, y)
-  }
-
-  set(x, y) {
-    this.x = x
-    this.y = y
-  }
-}
+import { Vector2 } from './math.js'
 
 class Trait {
   constructor(name) {
