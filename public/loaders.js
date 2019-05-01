@@ -1,4 +1,5 @@
 `use strict`
+import Camera from './Camera.js'
 import Level from './Level.js'
 import Spritesheet from './Spritesheet.js'
 
@@ -6,6 +7,7 @@ import {
   createBackgroundLayer,
   createSpriteLayer,
   createCollisionLayer,
+  createCameraLayer,
 } from './layers.js'
 
 function loadJson(url) {
@@ -27,7 +29,10 @@ const createTiles = (lvl, bgs) => {
 
     for (let x = xStart; x < xEnd; x += 1) {
       for (let y = yStart; y < yEnd; y += 1) {
-        lvl.tiles.set(x, y, { name: bg.tile })
+        lvl.tiles.set(x, y, {
+          name: bg.tile,
+          type: bg.type,
+        })
       }
     }
   }
@@ -63,6 +68,7 @@ async function loadSpritesheet (name) {
 async function loadLevel(name) {
   const lvlSpec = await loadJson(`/levels/${name}.json`)
   const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
+  const cam = new Camera()
 
   const lvl = new Level()
 
@@ -72,9 +78,13 @@ async function loadLevel(name) {
     createBackgroundLayer(lvl, bgSprites),
     createSpriteLayer(lvl.entities),
     createCollisionLayer(lvl),
+    createCameraLayer(cam),
   )
 
-  return lvl
+  return {
+    lvl,
+    cam,
+  }
 }
 
 export {

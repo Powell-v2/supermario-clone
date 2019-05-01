@@ -1,17 +1,45 @@
 `use strict`
 
 const createBackgroundLayer = (lvl, sprites) => {
+  const { tiles, tileCollider } = lvl
+  const tileResolver = lvl.tileCollider.tiles
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
-  buff.width = 4096
+  buff.width = 450 + 16
   buff.height = 300
 
-  lvl.tiles.forEach((tile, x, y) => {
-    sprites.drawTile(tile.name, ctx, x, y)
-  })
+  let startIdx
+  let endIdx
+
+  function redraw(drawFrom, drawTo) {
+    if ((drawFrom === startIdx) && (drawTo === endIdx)) return
+
+    startIdx = drawFrom
+    endIdx = drawTo
+
+    for (let x = drawFrom; x < drawTo; x += 1) {
+      const col = tiles.grid[x]
+
+      if (col) {
+        col.forEach((tile, y) =>
+          sprites.drawTile(tile.name, ctx, x - drawFrom, y)
+        )
+      }
+    }
+  }
 
   return function drawBackgroundLayer(ctx, cam) {
-    ctx.drawImage(buff, -cam.pos.x, -cam.pos.y)
+    const drawW = tileResolver.toIndex(cam.size.x)
+    const drawFrom = tileResolver.toIndex(cam.pos.x)
+    const drawTo = drawFrom + drawW
+
+    redraw(drawFrom, drawTo)
+
+    ctx.drawImage(
+      buff,
+      -cam.pos.x % 16,
+      -cam.pos.y
+    )
   }
 }
 
@@ -77,8 +105,23 @@ const createCollisionLayer = (lvl) => {
   }
 }
 
+function createCameraLayer(camToDraw) {
+  return function drawCameraRect(ctx, fromCam) {
+    ctx.strokeStyle = `lime`
+    ctx.beginPath()
+    ctx.rect(
+      camToDraw.pos.x - fromCam.pos.x,
+      camToDraw.pos.y - fromCam.pos.y,
+      camToDraw.size.x,
+      camToDraw.size.y
+    )
+    ctx.stroke()
+  }
+}
+
 export {
   createBackgroundLayer,
   createSpriteLayer,
   createCollisionLayer,
+  createCameraLayer,
 }
