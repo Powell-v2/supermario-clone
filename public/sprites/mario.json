@@ -1,0 +1,21 @@
+{
+  "imageURL": "/assets/characters.gif",
+  "frames": [
+    {
+      "name": "idle",
+      "rect": [276, 44, 16, 16]
+    },
+    {
+      "name": "run_1",
+      "rect": [290, 44, 16, 16]
+    },
+    {
+      "name": "run_2",
+      "rect": [304, 43, 16, 16]
+    },
+    {
+      "name": "run_3",
+      "rect": [321, 44, 16, 16]
+    }
+  ]
+}

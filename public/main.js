@@ -1,62 +1,35 @@
 `use strict`
-import Keyboard from './Keyboard.js'
 import Timer from './Timer.js'
 
 import { createMario } from './entities.js'
-import { createCollisionLayer } from './layers.js'
 import { loadLevel } from './loaders.js'
+import { setupKeyboard } from './input.js'
+import { setupMouseControl } from './debug.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
 
-const SPACE = 32
-const RIGHT_ARROW = 39
-const LEFT_ARROW = 37
-
 Promise.all([
   createMario(),
   loadLevel(`1-1`)
-]).then(([ mario, lvl ]) => {
-    lvl.entities.add(mario)
-    const gravity = 1500
+]).then(([ mario, { lvl, cam } ]) => {
+  // NOTE: for debugging
+  setupMouseControl(scene, mario, cam)
 
-    createCollisionLayer(lvl)
+  lvl.entities.add(mario)
 
-    const keyboardInput = new Keyboard()
-    keyboardInput.mapAction(SPACE, (state) => {
-      if (state) mario.jump.start()
-      else mario.jump.cancel()
-    })
-    keyboardInput.mapAction(RIGHT_ARROW, (state) => {
-      mario.walk.direction = state
-    })
-    keyboardInput.mapAction(LEFT_ARROW, (state) => {
-      mario.walk.direction = -state
-    })
-    keyboardInput.listenTo(window)
+  const keyboardInput = setupKeyboard(mario)
+  keyboardInput.listenTo(window)
 
-    const events = [`mousedown`, `mousemove`]
+  mario.pos.set(64, 180)
 
-    events.forEach((type) => {
-      scene.addEventListener(type, (ev) => {
-        if (ev.buttons === 1) {
-          mario.vel.set(0, 0)
-          mario.pos.set(ev.offsetX, ev.offsetY)
-        }
-      })
-    })
+  const timer = new Timer()
 
-    mario.pos.set(64, 180)
+  timer.update = function(delta) {
+    lvl.update(delta)
 
-    const timer = new Timer()
+    lvl.comp.draw(ctx, cam)
+  }
 
-    timer.update = function(delta) {
-      lvl.update(delta)
-
-      lvl.comp.draw(ctx)
-
-      mario.vel.y += gravity * delta
-    }
-
-    timer.start(0)
-  })
+  timer.start(0)
+})

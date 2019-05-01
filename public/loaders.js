@@ -54,13 +54,25 @@ const createTiles = (lvl, bgs) => {
   })
 }
 
-async function loadSpritesheet (name) {
-  const { imageURL, tiles, tileW, tileH } = await loadJson(`/sprites/${name}.json`)
+async function loadSpritesheet(name) {
+  const {
+    imageURL,
+    tiles,
+    frames,
+    tileW,
+    tileH,
+  } = await loadJson(`/sprites/${name}.json`)
   const img = await loadImage(imageURL)
 
   const sprites = new Spritesheet(img, tileW, tileH)
 
-  tiles.forEach(({ name, index: [x,y] }) => sprites.defineTile(name, x, y))
+  if (tiles) {
+    tiles.forEach(({ name, index: [x,y] }) => sprites.defineTile(name, x, y))
+  }
+
+  if (frames) {
+    frames.forEach(({ name, rect }) => sprites.define(name, ...rect))
+  }
 
   return sprites
 }
@@ -77,8 +89,8 @@ async function loadLevel(name) {
   lvl.comp.layers.push(
     createBackgroundLayer(lvl, bgSprites),
     createSpriteLayer(lvl.entities),
-    createCollisionLayer(lvl),
-    createCameraLayer(cam),
+    // createCollisionLayer(lvl),
+    // createCameraLayer(cam),
   )
 
   return {
@@ -90,4 +102,5 @@ async function loadLevel(name) {
 export {
   loadImage,
   loadLevel,
+  loadSpritesheet,
 }
