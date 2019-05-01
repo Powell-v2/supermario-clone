@@ -10,6 +10,18 @@
     {
       "name": "sky",
       "index": [3, 23]
+    },
+    {
+      "name": "bricks",
+      "index": [1, 0]
+    },
+    {
+      "name": "metal",
+      "index": [0, 1]
+    },
+    {
+      "name": "question",
+      "index": [24, 0]
     }
   ]
 }
