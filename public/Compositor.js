@@ -5,8 +5,8 @@ class Compositor {
     this.layers = []
   }
 
-  draw(ctx) {
-    this.layers.forEach((layer) => layer(ctx))
+  draw(ctx, cam) {
+    this.layers.forEach((layer) => layer(ctx, cam))
   }
 }
 

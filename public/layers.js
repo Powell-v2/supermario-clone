@@ -3,21 +3,36 @@
 const createBackgroundLayer = (lvl, sprites) => {
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
-  buff.width = 350
+  buff.width = 4096
   buff.height = 300
 
   lvl.tiles.forEach((tile, x, y) => {
     sprites.drawTile(tile.name, ctx, x, y)
   })
 
-  return function drawBackgroundLayer(ctx) {
-    ctx.drawImage(buff, 0, 0)
+  return function drawBackgroundLayer(ctx, cam) {
+    ctx.drawImage(buff, -cam.pos.x, -cam.pos.y)
   }
 }
 
-const createSpriteLayer = (entities) => {
-  return function drawSpriteLayer(ctx) {
-    entities.forEach((ent) => ent.draw(ctx))
+const createSpriteLayer = (entities, width = 64, height = 64) => {
+  const spriteBuff = document.createElement(`canvas`)
+  const spriteBuffCtx = spriteBuff.getContext(`2d`)
+
+  spriteBuff.width = width
+  spriteBuff.height = height
+
+  return function drawSpriteLayer(ctx, cam) {
+    entities.forEach((ent) => {
+      spriteBuffCtx.clearRect(0, 0, width, height)
+
+      ent.draw(spriteBuffCtx)
+
+      ctx.drawImage(
+        spriteBuff,
+        ent.pos.x - cam.pos.x, ent.pos.y - cam.pos.y
+      )
+    })
   }
 }
 
@@ -33,18 +48,28 @@ const createCollisionLayer = (lvl) => {
     return getByIndexOrig.call(tileResolver, x, y)
   }
 
-  return function drawCollision(ctx) {
+  return function drawCollision(ctx, cam) {
     ctx.strokeStyle = `green`
     resolvedTiles.forEach(({ x, y }) => {
       ctx.beginPath()
-      ctx.rect(x * tileSize, y * tileSize, tileSize, tileSize)
+      ctx.rect(
+        x * tileSize - cam.pos.x,
+        y * tileSize - cam.pos.y,
+        tileSize,
+        tileSize
+      )
       ctx.stroke()
     })
 
     ctx.strokeStyle = `red`
     lvl.entities.forEach(({ pos, size }) => {
       ctx.beginPath()
-      ctx.rect(pos.x, pos.y, size.x, size.y)
+      ctx.rect(
+        pos.x - cam.pos.x,
+        pos.y - cam.pos.y,
+        size.x,
+        size.y
+      )
       ctx.stroke()
     })
 
