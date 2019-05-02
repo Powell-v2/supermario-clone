@@ -9,31 +9,32 @@ class TileCollider {
   checkX(entity) {
     let x
 
-    const { pos, vel, size } = entity
-
-    if (vel.x > 0) {
-      x = pos.x + size.x
-    }
-    else if (vel.x < 0) {
-      x = pos.x
-    }
+    if (entity.vel.x > 0) x = entity.pos.x + entity.size.x
+    else if (entity.vel.x < 0) x = entity.pos.x
     else return
 
-    const matches = this.tiles.searchByRange(x, x, pos.y, pos.y + size.y)
+    const matches = this.tiles.searchByRange(
+      x, x,
+      entity.pos.y,
+      entity.pos.y + entity.size.y
+    )
 
     matches.forEach((match) => {
+      // Skip non-blocking types.
       if (match.tile.type !== `ground`) return
 
-      if (vel.x > 0) {
-        if (pos.x + size.x > match.xLeft) {
-          pos.x = match.xLeft - size.x
-          vel.x = 0
+      // Check for collision on the right side.
+      if (entity.vel.x > 0) {
+        if (entity.pos.x + entity.size.x > match.xLeft) {
+          entity.pos.x = match.xLeft - entity.size.x
+          entity.vel.x = 0
         }
       }
-      else if (vel.x < 0) {
-        if (pos.x < match.xRight) {
-          pos.x = match.xRight
-          vel.x = 0
+      // Check for collision on the left side.
+      else if (entity.vel.x < 0) {
+        if (entity.pos.x < match.xRight) {
+          entity.pos.x = match.xRight
+          entity.vel.x = 0
         }
       }
     })
@@ -42,31 +43,31 @@ class TileCollider {
   checkY(entity) {
     let y
 
-    const { pos, vel, size } = entity
-
-    if (vel.y > 0) {
-      y = pos.y + size.y
-    }
-    else if (vel.y < 0) {
-      y = pos.y
-    }
+    if (entity.vel.y > 0) y = entity.pos.y + entity.size.y
+    else if (entity.vel.y < 0) y = entity.pos.y
     else return
 
-    const matches = this.tiles.searchByRange(pos.x, pos.x + size.x, y, y)
+    const matches = this.tiles.searchByRange(
+      entity.pos.x, entity.pos.x + entity.size.x,
+      y, y
+    )
 
     matches.forEach((match) => {
+      // Skip non-blocking types.
       if (match.tile.type !== `ground`) return
 
-      if (vel.y > 0) {
-        if (pos.y + size.y > match.yTop) {
-          pos.y = match.yTop - size.y
-          vel.y = 0
+      // Check for collision below.
+      if (entity.vel.y > 0) {
+        if (entity.pos.y + entity.size.y > match.yTop) {
+          entity.pos.y = match.yTop - entity.size.y
+          entity.vel.y = 0
         }
       }
-      else if (vel.y < 0) {
-        if (pos.y < match.yBottom) {
-          pos.y = match.yBottom
-          vel.y = 0
+      // Check for collision above.
+      else if (entity.vel.y < 0) {
+        if (entity.pos.y < match.yBottom) {
+          entity.pos.y = match.yBottom
+          entity.vel.y = 0
         }
       }
     })
