@@ -4,7 +4,6 @@ import Timer from './Timer.js'
 import { createMario } from './entities.js'
 import { loadLevel } from './loaders.js'
 import { setupKeyboard } from './input.js'
-import { setupMouseControl } from './debug.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
@@ -13,9 +12,6 @@ Promise.all([
   createMario(),
   loadLevel(`1-1`)
 ]).then(([ mario, { lvl, cam } ]) => {
-  // NOTE: for debugging
-  setupMouseControl(scene, mario, cam)
-
   lvl.entities.add(mario)
 
   const keyboardInput = setupKeyboard(mario)
@@ -27,6 +23,10 @@ Promise.all([
 
   timer.update = function(delta) {
     lvl.update(delta)
+
+    if (mario.pos.x > 100) {
+      cam.pos.x = mario.pos.x - 100
+    }
 
     lvl.comp.draw(ctx, cam)
   }

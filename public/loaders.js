@@ -8,8 +8,6 @@ import { createAnimation } from './animation.js'
 import {
   createBackgroundLayer,
   createSpriteLayer,
-  createCollisionLayer,
-  createCameraLayer,
 } from './layers.js'
 
 function loadJson(url) {
@@ -99,8 +97,6 @@ async function loadLevel(name) {
   lvl.comp.layers.push(
     createBackgroundLayer(lvl, bgSprites),
     createSpriteLayer(lvl.entities),
-    // createCollisionLayer(lvl),
-    // createCameraLayer(cam),
   )
 
   return {

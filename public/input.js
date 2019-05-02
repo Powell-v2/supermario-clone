@@ -13,10 +13,10 @@ const setupKeyboard = (entity) => {
     else entity.jump.cancel()
   })
   keyboardInput.mapAction(RIGHT_ARROW, (state) => {
-    entity.walk.direction = state
+    entity.run.direction += state ? 1 : -1
   })
   keyboardInput.mapAction(LEFT_ARROW, (state) => {
-    entity.walk.direction = -state
+    entity.run.direction += state ? -1 : 1
   })
 
   return keyboardInput
