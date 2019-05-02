@@ -1,0 +1,7 @@
+{
+  "name": "Super Mario Playground",
+  "routes": [{
+    "src": "/",
+    "dest": "public/index.html"
+  }]
+}
