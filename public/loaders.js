@@ -3,6 +3,8 @@ import Camera from './Camera.js'
 import Level from './Level.js'
 import Spritesheet from './Spritesheet.js'
 
+import { createAnimation } from './animation.js'
+
 import {
   createBackgroundLayer,
   createSpriteLayer,
@@ -59,6 +61,7 @@ async function loadSpritesheet(name) {
     imageURL,
     tiles,
     frames,
+    animations,
     tileW,
     tileH,
   } = await loadJson(`/sprites/${name}.json`)
@@ -72,6 +75,13 @@ async function loadSpritesheet(name) {
 
   if (frames) {
     frames.forEach(({ name, rect }) => sprites.define(name, ...rect))
+  }
+
+  if (animations) {
+    animations.forEach(({ name, frames, frameLen }) => {
+      const animation = createAnimation(frames, frameLen)
+      sprites.defineAnimation(name, animation)
+    })
   }
 
   return sprites

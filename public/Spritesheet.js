@@ -6,6 +6,7 @@ class Spritesheet {
     this.width = width
     this.height = height
     this.tileset = new Map()
+    this.animations = new Map()
   }
 
   define(name, x, y, width, height) {
@@ -38,6 +39,10 @@ class Spritesheet {
     this.define(name, x * this.width, y * this.height, this.width, this.height)
   }
 
+  defineAnimation(name, anim) {
+    this.animations.set(name, anim)
+  }
+
   draw(name, ctx, x, y, isFlipped = false) {
     const buffer = this.tileset.get(name)[isFlipped ? 0 : 1]
     ctx.drawImage(buffer, x, y)
@@ -46,6 +51,12 @@ class Spritesheet {
   drawTile(name, ctx, x, y) {
     const buffer = this.tileset.get(name)[1]
     ctx.drawImage(buffer, x * this.width, y * this.height)
+  }
+
+  drawAnimation(name, ctx, x, y, distance) {
+    const animation = this.animations.get(name)
+
+    this.drawTile(animation(distance), ctx, x, y)
   }
 }
 

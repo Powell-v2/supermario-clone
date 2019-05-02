@@ -8,13 +8,16 @@ class Level {
   constructor() {
     this.comp = new Compositor()
     this.entities = new Set()
-    this.gravity = 1500
     this.tiles = new Matrix()
-
     this.tileCollider = new TileCollider(this.tiles)
+
+    this.gravity = 1500
+    this.totalTime = 0
   }
 
   update(delta) {
+    this.totalTime += delta
+
     this.entities.forEach((ent) => {
       const { pos, vel } = ent
 

@@ -22,6 +22,30 @@
     {
       "name": "question",
       "index": [24, 0]
+    },
+    {
+      "name": "question_1",
+      "index": [24, 0]
+    },
+    {
+      "name": "question_2",
+      "index": [25, 0]
+    },
+    {
+      "name": "question_3",
+      "index": [26, 0]
+    }
+  ],
+  "animations": [
+    {
+      "name": "question",
+      "frameLen": 0.15,
+      "frames": [
+        "question_1",
+        "question_1",
+        "question_3",
+        "question_2"
+      ]
     }
   ]
 }

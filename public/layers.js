@@ -1,7 +1,7 @@
 `use strict`
 
 const createBackgroundLayer = (lvl, sprites) => {
-  const { tiles, tileCollider } = lvl
+  const { tiles } = lvl
   const tileResolver = lvl.tileCollider.tiles
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
@@ -12,18 +12,21 @@ const createBackgroundLayer = (lvl, sprites) => {
   let endIdx
 
   function redraw(drawFrom, drawTo) {
-    if ((drawFrom === startIdx) && (drawTo === endIdx)) return
-
     startIdx = drawFrom
     endIdx = drawTo
 
-    for (let x = drawFrom; x < drawTo; x += 1) {
+    for (let x = startIdx; x < endIdx; x += 1) {
       const col = tiles.grid[x]
 
       if (col) {
-        col.forEach((tile, y) =>
-          sprites.drawTile(tile.name, ctx, x - drawFrom, y)
-        )
+        col.forEach((tile, y) => {
+          if (sprites.animations.has(tile.name)) {
+            sprites.drawAnimation(tile.name, ctx, x - startIdx, y, lvl.totalTime)
+          }
+          else {
+            sprites.drawTile(tile.name, ctx, x - startIdx, y)
+          }
+        })
       }
     }
   }
