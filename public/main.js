@@ -7,6 +7,7 @@ import { setupKeyboard } from './input.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
+ctx.scale(2, 2)
 
 Promise.all([
   createMario(),
