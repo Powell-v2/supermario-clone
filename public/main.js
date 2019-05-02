@@ -17,7 +17,7 @@ Promise.all([
   const keyboardInput = setupKeyboard(mario)
   keyboardInput.listenTo(window)
 
-  mario.pos.set(64, 180)
+  mario.pos.set(64, 64)
 
   const timer = new Timer()
 

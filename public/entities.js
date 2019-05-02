@@ -6,6 +6,9 @@ import Run from './traits/Run.js'
 import { loadSpritesheet } from './loaders.js'
 import { createAnimation } from './animation.js'
 
+const DRAG_TURBO = 1/5000
+const DRAG_NORMAL = 1/1500
+
 async function createMario() {
   const sprite = await loadSpritesheet(`mario`)
   const mario = new Entity()
@@ -15,9 +18,11 @@ async function createMario() {
   mario.addTrait(new Jump())
   mario.addTrait(new Run())
 
-  const runAnimation = createAnimation([`run_1`, `run_2`, `run_3`], 10)
+  const runAnimation = createAnimation([`run_1`, `run_2`, `run_3`], 9)
 
   function routeFrame(mario) {
+    if (mario.jump.isFalling) return `jump`
+
     if (mario.run.distance > 0) {
       if (
         (mario.vel.x > 0) && (mario.run.direction < 0) ||
@@ -34,6 +39,10 @@ async function createMario() {
   mario.draw = function(ctx) {
     const isFlipped = (this.run.facing === -1) ? true : false
     sprite.draw(routeFrame(this), ctx, 0, 0, isFlipped)
+  }
+
+  mario.turbo = function setTurboState(isTurboOn) {
+    this.run.dragFactor = isTurboOn ? DRAG_TURBO : DRAG_NORMAL
   }
 
   return mario

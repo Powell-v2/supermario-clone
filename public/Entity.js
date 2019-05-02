@@ -1,6 +1,11 @@
 `use strict`
 import { Vector2 } from './math.js'
 
+const SIDES = {
+  TOP: Symbol(`top`),
+  BOTTOM: Symbol(`bottom`),
+}
+
 class Trait {
   constructor(name) {
     this.NAME = name
@@ -8,6 +13,10 @@ class Trait {
 
   update() {
     console.warn(`Trait: unhandled update call.`)
+  }
+
+  obstruct() {
+
   }
 }
 
@@ -25,6 +34,10 @@ class Entity {
     this[trait.NAME] = trait
   }
 
+  obstruct(side) {
+    this.traits.forEach((trait) => trait.obstruct(this, side))
+  }
+
   update(delta) {
     this.traits.forEach((trait) => trait.update(this, delta))
   }
@@ -33,4 +46,5 @@ class Entity {
 export {
   Entity as default,
   Trait,
+  SIDES,
 }

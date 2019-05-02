@@ -1,5 +1,6 @@
 `use strict`
 import TileResolver from './TileResolver.js'
+import { SIDES } from './Entity.js'
 
 class TileCollider {
   constructor(tilesMatrix) {
@@ -61,6 +62,8 @@ class TileCollider {
         if (entity.pos.y + entity.size.y > match.yTop) {
           entity.pos.y = match.yTop - entity.size.y
           entity.vel.y = 0
+
+          entity.obstruct(SIDES.BOTTOM)
         }
       }
       // Check for collision above.
@@ -68,6 +71,8 @@ class TileCollider {
         if (entity.pos.y < match.yBottom) {
           entity.pos.y = match.yBottom
           entity.vel.y = 0
+
+          entity.obstruct(SIDES.TOP)
         }
       }
     })

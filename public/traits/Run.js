@@ -7,7 +7,7 @@ class Run extends Trait {
     this.direction = 0
     this.acceleration = 500
     this.deceleration = 250
-    this.dragFactor = 1/5000
+    this.dragFactor = 1/1500
     // Total distance covered.
     this.distance = 0
     // Current direction the entity is facing.
@@ -21,7 +21,17 @@ class Run extends Trait {
     if (this.direction !== 0) {
       entity.vel.x += (this.acceleration * delta) * this.direction
 
-      this.facing = this.direction
+      if (entity.jump) {
+        // Change facing direction only when on the ground,
+        // don't change it in the air.
+        if (entity.jump.isFalling === false) {
+          this.facing = this.direction
+        }
+      }
+      else {
+        this.facing = this.direction
+      }
+
     }
     // Reduce velocity if not currently moving (button is released).
     else if (entity.vel.x !== 0) {
