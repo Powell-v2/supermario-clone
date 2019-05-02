@@ -1,5 +1,5 @@
 {
-  "imageURL": "/assets/characters.gif",
+  "imageURL": "/public/assets/characters.gif",
   "frames": [
     {
       "name": "idle",

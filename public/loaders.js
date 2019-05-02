@@ -62,7 +62,7 @@ async function loadSpritesheet(name) {
     animations,
     tileW,
     tileH,
-  } = await loadJson(`/sprites/${name}.json`)
+  } = await loadJson(`/public/sprites/${name}.json`)
   const img = await loadImage(imageURL)
 
   const sprites = new Spritesheet(img, tileW, tileH)
@@ -86,7 +86,7 @@ async function loadSpritesheet(name) {
 }
 
 async function loadLevel(name) {
-  const lvlSpec = await loadJson(`/levels/${name}.json`)
+  const lvlSpec = await loadJson(`/public/levels/${name}.json`)
   const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
   const cam = new Camera()
 
