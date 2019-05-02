@@ -13,6 +13,10 @@ class Keyboard {
     this.actions.set(code, cb)
   }
 
+  mapActions(codes, cb) {
+    codes.forEach((code) => this.actions.set(code, cb))
+  }
+
   handleEvent(ev) {
     const { code, type } = ev
 
