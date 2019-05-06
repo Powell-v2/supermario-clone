@@ -50,6 +50,30 @@
     {
       "name": "pipe_vert_bot_right",
       "index": [1, 9]
+    },
+    {
+      "name": "cloud_1_top_left",
+      "index": [0, 20]
+    },
+    {
+      "name": "cloud_1_top_mid",
+      "index": [1, 20]
+    },
+    {
+      "name": "cloud_1_top_right",
+      "index": [2, 20]
+    },
+    {
+      "name": "cloud_1_bot_left",
+      "index": [0, 21]
+    },
+    {
+      "name": "cloud_1_bot_mid",
+      "index": [1, 21]
+    },
+    {
+      "name": "cloud_1_bot_right",
+      "index": [2, 21]
     }
   ],
   "animations": [

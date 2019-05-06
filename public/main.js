@@ -2,7 +2,7 @@
 import Timer from './Timer.js'
 
 import { createMario } from './entities.js'
-import { loadLevel } from './loaders.js'
+import { loadLevel } from './loaders/level.js'
 import { setupKeyboard } from './input.js'
 
 const scene = document.getElementById(`scene`)

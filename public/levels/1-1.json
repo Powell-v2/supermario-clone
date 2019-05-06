@@ -1,84 +1,98 @@
 {
   "spritesheet": "overworld",
-  "backgrounds": [
+  "layers": [
     {
-      "tile": "sky",
-      "ranges": [
-        [0, 250, 0, 14]
+      "tiles": [
+        {
+          "name": "sky",
+          "ranges": [
+            [0, 250, 0, 14]
+          ]
+        },
+        {
+          "name": "ground",
+          "type": "ground",
+          "ranges": [
+            [0, 250, 14, 3]
+          ]
+        },
+        {
+          "name": "sky",
+          "ranges": [
+            [25, 3, 14, 3]
+          ]
+        },
+        {
+          "name": "metal",
+          "type": "ground",
+          "ranges": [
+            [24, 13],
+            [24, 12],
+            [28, 13],
+            [28, 12]
+          ]
+        }
       ]
     },
     {
-      "tile": "ground",
-      "type": "ground",
-      "ranges": [
-        [0, 250, 14, 3]
-      ]
-    },
-    {
-      "tile": "sky",
-      "ranges": [
-        [25, 3, 14, 3]
-      ]
-    },
-    {
-      "tile": "bricks",
-      "type": "ground",
-      "ranges": [
-        [15, 7, 9, 1]
-      ]
-    },
-    {
-      "tile": "question",
-      "type": "ground",
-      "ranges": [
-        [16, 9],
-        [18, 9],
-        [20, 9],
-        [11, 9]
-      ]
-    },
-    {
-      "tile": "metal",
-      "type": "ground",
-      "ranges": [
-        [24, 13],
-        [24, 12],
-        [28, 13],
-        [28, 12]
-      ]
-    },
-    {
-      "pattern": "pipe_vert",
-      "ranges": [
-        [0, 12],
-        [40, 12]
-      ]
-    },
-    {
-      "pattern": "pipe_vert_2h",
-      "ranges": [
-        [45, 11]
-      ]
-    },
-    {
-      "pattern": "pipe_vert_3h",
-      "ranges": [
-        [50, 10]
+      "tiles": [
+        {
+          "name": "bricks",
+          "type": "ground",
+          "ranges": [
+            [15, 7, 9, 1]
+          ]
+        },
+        {
+          "name": "question",
+          "type": "ground",
+          "ranges": [
+            [16, 9],
+            [18, 9],
+            [20, 9],
+            [11, 9]
+          ]
+        },
+        {
+          "pattern": "pipe_vert",
+          "ranges": [
+            [0, 12],
+            [40, 12]
+          ]
+        },
+        {
+          "pattern": "pipe_vert_2h",
+          "ranges": [
+            [45, 11]
+          ]
+        },
+        {
+          "pattern": "pipe_vert_3h",
+          "ranges": [
+            [50, 10]
+          ]
+        },
+        {
+          "pattern": "cloud_single",
+          "ranges": [
+            [8, 3]
+          ]
+        }
       ]
     }
   ],
   "patterns": {
     "pipe_vert_top": {
-      "backgrounds": [
+      "tiles": [
         {
-          "tile": "pipe_vert_top_left",
+          "name": "pipe_vert_top_left",
           "type": "ground",
           "ranges": [
             [0, 0]
           ]
         },
         {
-          "tile": "pipe_vert_top_right",
+          "name": "pipe_vert_top_right",
           "type": "ground",
           "ranges": [
             [1, 0]
@@ -87,16 +101,16 @@
       ]
     },
     "pipe_vert_bot": {
-      "backgrounds": [
+      "tiles": [
         {
-          "tile": "pipe_vert_bot_left",
+          "name": "pipe_vert_bot_left",
           "type": "ground",
           "ranges": [
             [0, 0]
           ]
         },
         {
-          "tile": "pipe_vert_bot_right",
+          "name": "pipe_vert_bot_right",
           "type": "ground",
           "ranges": [
             [1, 0]
@@ -105,7 +119,7 @@
       ]
     },
     "pipe_vert": {
-      "backgrounds": [
+      "tiles": [
         {
           "pattern": "pipe_vert_top",
           "ranges": [
@@ -121,7 +135,7 @@
       ]
     },
     "pipe_vert_2h": {
-      "backgrounds": [
+      "tiles": [
         {
           "pattern": "pipe_vert_top",
           "ranges": [
@@ -138,7 +152,7 @@
       ]
     },
     "pipe_vert_3h": {
-      "backgrounds": [
+      "tiles": [
         {
           "pattern": "pipe_vert_top",
           "ranges": [
@@ -152,6 +166,34 @@
             [0, 2],
             [0, 3]
           ]
+        }
+      ]
+    },
+    "cloud_single": {
+      "tiles": [
+        {
+          "name": "cloud_1_top_left",
+          "ranges": [[0, 0]]
+        },
+        {
+          "name": "cloud_1_top_mid",
+          "ranges": [[1, 0]]
+        },
+        {
+          "name": "cloud_1_top_right",
+          "ranges": [[2, 0]]
+        },
+        {
+          "name": "cloud_1_bot_left",
+          "ranges": [[0, 1]]
+        },
+        {
+          "name": "cloud_1_bot_mid",
+          "ranges": [[1, 1]]
+        },
+        {
+          "name": "cloud_1_bot_right",
+          "ranges": [[2, 1]]
         }
       ]
     }

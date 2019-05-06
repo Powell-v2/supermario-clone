@@ -1,19 +1,16 @@
 `use strict`
+import TileResolver from './TileResolver.js'
 
-const createBackgroundLayer = (lvl, sprites) => {
-  const { tiles } = lvl
-  const tileResolver = lvl.tileCollider.tiles
+const createBackgroundLayer = (lvl, tiles, sprites) => {
+  const tileResolver = new TileResolver(tiles)
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
+
   buff.width = 450 + 16
   buff.height = 300
 
-  let startIdx
-  let endIdx
-
-  function redraw(drawFrom, drawTo) {
-    startIdx = drawFrom
-    endIdx = drawTo
+  function redraw(startIdx, endIdx) {
+    ctx.clearRect(0, 0, buff.width, buff.height)
 
     for (let x = startIdx; x < endIdx; x += 1) {
       const col = tiles.grid[x]

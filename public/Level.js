@@ -2,17 +2,19 @@
 import Compositor from './Compositor.js'
 import TileCollider from './TileCollider.js'
 
-import { Matrix } from './math.js'
-
 class Level {
   constructor() {
     this.comp = new Compositor()
     this.entities = new Set()
-    this.tiles = new Matrix()
-    this.tileCollider = new TileCollider(this.tiles)
 
     this.gravity = 1500
     this.totalTime = 0
+
+    this.tileCollider = null
+  }
+
+  setCollisionGrid(matrix) {
+    this.tileCollider = new TileCollider(matrix)
   }
 
   update(delta) {
