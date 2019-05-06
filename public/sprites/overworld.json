@@ -34,6 +34,22 @@
     {
       "name": "question_3",
       "index": [26, 0]
+    },
+    {
+      "name": "pipe_vert_top_left",
+      "index": [0, 8]
+    },
+    {
+      "name": "pipe_vert_top_right",
+      "index": [1, 8]
+    },
+    {
+      "name": "pipe_vert_bot_left",
+      "index": [0, 9]
+    },
+    {
+      "name": "pipe_vert_bot_right",
+      "index": [1, 9]
     }
   ],
   "animations": [

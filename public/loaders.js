@@ -22,38 +22,6 @@ const loadImage = (url) => {
   })
 }
 
-const createTiles = (lvl, bgs) => {
-  function applyRange(bg, xStart, xLen, yStart, yLen ) {
-    const xEnd = xStart + xLen
-    const yEnd = yStart + yLen
-
-    for (let x = xStart; x < xEnd; x += 1) {
-      for (let y = yStart; y < yEnd; y += 1) {
-        lvl.tiles.set(x, y, {
-          name: bg.tile,
-          type: bg.type,
-        })
-      }
-    }
-  }
-
-  bgs.forEach((bg) => {
-    bg.ranges.forEach((range) => {
-      if (range.length === 4) {
-        applyRange(bg, ...range)
-      }
-      else if (range.length === 3) {
-        const [xStart, xLen, yStart] = range
-        applyRange(bg, xStart, xLen, yStart, 1)
-      }
-      else if (range.length === 2) {
-        const [xStart, yStart] = range
-        applyRange(bg, xStart, 1, yStart, 1)
-      }
-    })
-  })
-}
-
 async function loadSpritesheet(name) {
   const {
     imageURL,
@@ -86,13 +54,17 @@ async function loadSpritesheet(name) {
 }
 
 async function loadLevel(name) {
-  const lvlSpec = await loadJson(`/public/levels/${name}.json`)
-  const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
+  const {
+    spritesheet,
+    backgrounds,
+    patterns
+  } = await loadJson(`/public/levels/${name}.json`)
+  const bgSprites = await loadSpritesheet(spritesheet)
   const cam = new Camera()
 
   const lvl = new Level()
 
-  createTiles(lvl, lvlSpec.backgrounds)
+  createTiles(lvl, backgrounds, patterns)
 
   lvl.comp.layers.push(
     createBackgroundLayer(lvl, bgSprites),
@@ -103,6 +75,50 @@ async function loadLevel(name) {
     lvl,
     cam,
   }
+}
+
+const createTiles = (lvl, bgs, patterns, offsetX = 0, offsetY = 0) => {
+  function applyRange(bg, xStart, xLen, yStart, yLen) {
+    const xEnd = xStart + xLen
+    const yEnd = yStart + yLen
+
+    for (let x = xStart; x < xEnd; x += 1) {
+      for (let y = yStart; y < yEnd; y += 1) {
+        const derivedX = x + offsetX
+        const derivedY = y + offsetY
+
+        if (bg.pattern) {
+          const patternBgs = patterns[bg.pattern].backgrounds
+          createTiles(lvl, patternBgs, patterns, derivedX, derivedY)
+        }
+        else {
+          lvl.tiles.set(derivedX, derivedY, {
+            name: bg.tile,
+            type: bg.type,
+          })
+        }
+      }
+    }
+  }
+
+  bgs.forEach((bg) => {
+    bg.ranges.forEach((range) => {
+      // Draw several tiles of arbitrary width & height at position {x,y}.
+      if (range.length === 4) {
+        applyRange(bg, ...range)
+      }
+      // Draw several tiles horizontally at position {x,y}.
+      else if (range.length === 3) {
+        const [xStart, xLen, yStart] = range
+        applyRange(bg, xStart, xLen, yStart, 1)
+      }
+      // Draw 1 tile at position {x,y}.
+      else if (range.length === 2) {
+        const [xStart, yStart] = range
+        applyRange(bg, xStart, 1, yStart, 1)
+      }
+    })
+  })
 }
 
 export {
