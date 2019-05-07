@@ -1,13 +1,13 @@
 `use strict`
 import Entity, { SIDES } from '../Entity.js'
+import WiggleWalk from '../traits/WiggleWalk.js'
 
 import { loadSpritesheet } from '../loaders.js'
 
 function createGoombaFactory(sprite) {
   const walkAnim = sprite.animations.get(`walk`)
 
-  function drawSprite(ctx) {
-    console.log(this)
+  function drawGoomba(ctx) {
     sprite.draw(walkAnim(this.lifetime), ctx, 0, 0)
   }
 
@@ -16,20 +16,9 @@ function createGoombaFactory(sprite) {
     goomba.size.set(16, 16)
     goomba.lifetime = 0
 
-    goomba.addTrait({
-      NAME: `walk`,
-      speed: 50,
-      obstruct(_goomba, side) {
-        if (side === SIDES.LEFT || side === SIDES.RIGHT) {
-          this.speed = -this.speed
-        }
-      },
-      update(goomba) {
-        goomba.vel.x = this.speed
-      }
-    })
+    goomba.addTrait(new WiggleWalk())
 
-    goomba.draw = drawSprite
+    goomba.draw = drawGoomba
 
     return goomba
   }
