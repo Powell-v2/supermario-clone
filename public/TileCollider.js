@@ -30,6 +30,8 @@ class TileCollider {
           entity.pos.x = match.xLeft - entity.size.x
           entity.vel.x = 0
         }
+
+        entity.obstruct(SIDES.RIGHT)
       }
       // Check for collision on the left side.
       else if (entity.vel.x < 0) {
@@ -37,6 +39,8 @@ class TileCollider {
           entity.pos.x = match.xRight
           entity.vel.x = 0
         }
+
+        entity.obstruct(SIDES.LEFT)
       }
     })
   }

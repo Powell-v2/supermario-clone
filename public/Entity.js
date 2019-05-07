@@ -4,6 +4,8 @@ import { Vector2 } from './math.js'
 const SIDES = {
   TOP: Symbol(`top`),
   BOTTOM: Symbol(`bottom`),
+  LEFT: Symbol(`left`),
+  RIGHT: Symbol(`right`),
 }
 
 class Trait {
@@ -26,6 +28,8 @@ class Entity {
     this.vel = new Vector2(0, 0)
     this.size = new Vector2(0, 0)
 
+    this.lifetime = 0
+
     this.traits = []
   }
 
@@ -40,6 +44,8 @@ class Entity {
 
   update(delta) {
     this.traits.forEach((trait) => trait.update(this, delta))
+
+    this.lifetime += delta
   }
 }
 
