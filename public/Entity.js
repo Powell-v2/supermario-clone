@@ -1,4 +1,6 @@
 `use strict`
+import BoundingBox from './BoundingBox.js'
+
 import { Vector2 } from './math.js'
 
 const SIDES = {
@@ -8,25 +10,13 @@ const SIDES = {
   RIGHT: Symbol(`right`),
 }
 
-class Trait {
-  constructor(name) {
-    this.NAME = name
-  }
-
-  update() {
-    console.warn(`Trait: unhandled update call.`)
-  }
-
-  obstruct() {
-
-  }
-}
-
 class Entity {
   constructor() {
     this.pos = new Vector2(0, 0)
     this.vel = new Vector2(0, 0)
     this.size = new Vector2(0, 0)
+    this.offset = new Vector2(0, 0)
+    this.bounds = new BoundingBox(this.pos, this.size, this.offset)
 
     this.lifetime = 0
 
@@ -46,6 +36,20 @@ class Entity {
     this.traits.forEach((trait) => trait.update(this, delta))
 
     this.lifetime += delta
+  }
+}
+
+class Trait {
+  constructor(name) {
+    this.NAME = name
+  }
+
+  update() {
+    console.warn(`Trait: unhandled update call.`)
+  }
+
+  obstruct() {
+
   }
 }
 

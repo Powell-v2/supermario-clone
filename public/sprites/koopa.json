@@ -1,0 +1,39 @@
+{
+  "imageURL": "/public/assets/characters.gif",
+  "frames": [
+    {
+      "name": "walk_1",
+      "rect": [296, 206, 16, 24]
+    },
+    {
+      "name": "walk_2",
+      "rect": [315, 206, 16, 24]
+    },
+    {
+      "name": "hiding",
+      "rect": [144, 206, 16, 24]
+    },
+    {
+      "name": "hiding_with_legs",
+      "rect": [163, 206, 16, 24]
+    }
+  ],
+  "animations": [
+    {
+      "name": "walk",
+      "frameLen": 0.2,
+      "frames": [
+        "walk_1",
+        "walk_2"
+      ]
+    },
+    {
+      "name": "wake",
+      "frameLen": 0.2,
+      "frames": [
+        "hiding",
+        "hiding_with_legs"
+      ]
+    }
+  ]
+}

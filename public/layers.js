@@ -90,11 +90,11 @@ const createCollisionLayer = (lvl) => {
     })
 
     ctx.strokeStyle = `red`
-    lvl.entities.forEach(({ pos, size }) => {
+    lvl.entities.forEach(({ bounds, size }) => {
       ctx.beginPath()
       ctx.rect(
-        pos.x - cam.pos.x,
-        pos.y - cam.pos.y,
+        bounds.left - cam.pos.x,
+        bounds.top - cam.pos.y,
         size.x,
         size.y
       )
