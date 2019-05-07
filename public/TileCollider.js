@@ -10,14 +10,14 @@ class TileCollider {
   checkX(entity) {
     let x
 
-    if (entity.vel.x > 0) x = entity.pos.x + entity.size.x
-    else if (entity.vel.x < 0) x = entity.pos.x
+    if (entity.vel.x > 0) x = entity.bounds.right
+    else if (entity.vel.x < 0) x = entity.bounds.left
     else return
 
     const matches = this.tiles.searchByRange(
       x, x,
-      entity.pos.y,
-      entity.pos.y + entity.size.y
+      entity.bounds.top,
+      entity.bounds.bottom
     )
 
     matches.forEach((match) => {
@@ -26,8 +26,8 @@ class TileCollider {
 
       // Check for collision on the right side.
       if (entity.vel.x > 0) {
-        if (entity.pos.x + entity.size.x > match.xLeft) {
-          entity.pos.x = match.xLeft - entity.size.x
+        if (entity.bounds.right > match.xLeft) {
+          entity.bounds.left = match.xLeft - entity.size.x
           entity.vel.x = 0
         }
 
@@ -35,8 +35,8 @@ class TileCollider {
       }
       // Check for collision on the left side.
       else if (entity.vel.x < 0) {
-        if (entity.pos.x < match.xRight) {
-          entity.pos.x = match.xRight
+        if (entity.bounds.left < match.xRight) {
+          entity.bounds.left = match.xRight
           entity.vel.x = 0
         }
 
@@ -48,12 +48,12 @@ class TileCollider {
   checkY(entity) {
     let y
 
-    if (entity.vel.y > 0) y = entity.pos.y + entity.size.y
-    else if (entity.vel.y < 0) y = entity.pos.y
+    if (entity.vel.y > 0) y = entity.bounds.bottom
+    else if (entity.vel.y < 0) y = entity.bounds.top
     else return
 
     const matches = this.tiles.searchByRange(
-      entity.pos.x, entity.pos.x + entity.size.x,
+      entity.bounds.left, entity.bounds.right,
       y, y
     )
 
@@ -63,8 +63,8 @@ class TileCollider {
 
       // Check for collision below.
       if (entity.vel.y > 0) {
-        if (entity.pos.y + entity.size.y > match.yTop) {
-          entity.pos.y = match.yTop - entity.size.y
+        if (entity.bounds.bottom > match.yTop) {
+          entity.bounds.top = match.yTop - entity.size.y
           entity.vel.y = 0
 
           entity.obstruct(SIDES.BOTTOM)
@@ -72,8 +72,8 @@ class TileCollider {
       }
       // Check for collision above.
       else if (entity.vel.y < 0) {
-        if (entity.pos.y < match.yBottom) {
-          entity.pos.y = match.yBottom
+        if (entity.bounds.top < match.yBottom) {
+          entity.bounds.top = match.yBottom
           entity.vel.y = 0
 
           entity.obstruct(SIDES.TOP)
