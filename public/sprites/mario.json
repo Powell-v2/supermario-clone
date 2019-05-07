@@ -25,5 +25,16 @@
       "name": "jump",
       "rect": [355, 44, 16, 16]
     }
+  ],
+  "animations": [
+    {
+      "name": "run",
+      "frameLen": 8,
+      "frames": [
+        "run_1",
+        "run_2",
+        "run_3"
+      ]
+    }
   ]
 }

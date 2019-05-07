@@ -1,27 +1,45 @@
 `use strict`
 import Timer from './Timer.js'
 
-import { createMario } from './entities.js'
+import { loadMario } from './entities/mario.js'
 import { loadLevel } from './loaders/level.js'
 import { setupKeyboard } from './input.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
-ctx.scale(2, 2)
 
 Promise.all([
-  createMario(),
+  loadMario(),
   loadLevel(`1-1`)
-]).then(([ mario, { lvl, cam } ]) => {
+]).then(([ createMario, { lvl, cam } ]) => {
+  const mario = createMario()
   lvl.entities.add(mario)
+  mario.pos.set(64, 64)
+
+  mario.addTrait({
+    NAME: `hack_trait`,
+    spawnTimeout: 0,
+    obstruct() {},
+    update(mario, delta) {
+      if (mario.vel.y < 0 && this.spawnTimeout > 0.1) {
+        const clone = createMario()
+        clone.pos.x = mario.pos.x
+        clone.pos.y = mario.pos.y
+        clone.vel.x = mario.vel.x - 200
+        clone.vel.y = mario.vel.y - 200
+        lvl.entities.add(clone)
+
+        this.spawnTimeout = 0
+      }
+
+      this.spawnTimeout += delta
+    }
+  })
 
   const keyboardInput = setupKeyboard(mario)
   keyboardInput.listenTo(window)
 
-  mario.pos.set(64, 64)
-
   const timer = new Timer()
-
   timer.update = function(delta) {
     lvl.update(delta)
 
@@ -31,6 +49,5 @@ Promise.all([
 
     lvl.comp.draw(ctx, cam)
   }
-
   timer.start(0)
 })
