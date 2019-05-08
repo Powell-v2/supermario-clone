@@ -28,10 +28,6 @@ function setupEntities(lvlSpec, lvl, entityFactory) {
     lvl.entities.add(entity)
   })
 
-  const koopa = entityFactory.koopa()
-  koopa.pos.set(333, 5)
-  lvl.entities.add(koopa)
-
   lvl.comp.layers.push(createSpriteLayer(lvl.entities))
 }
 
