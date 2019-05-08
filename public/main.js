@@ -6,7 +6,24 @@ import loadEntities from './entities/index.js'
 import { setupKeyboard } from './input.js'
 import { createLevelLoader } from './loaders/level.js'
 
-const ctx = document.getElementById(`scene`).getContext(`2d`)
+const scene = document.getElementById(`scene`)
+const ctx = scene.getContext(`2d`)
+const { offsetHeight, offsetWidth } = document.getElementById(`gameHolder`)
+// Extend scene and camera sizes by this value to
+// hide the process of drawing new tile columns.
+const drawingOffset = 32
+scene.width = offsetWidth + drawingOffset
+scene.height = offsetHeight
+
+const cam = new Camera()
+cam.size.set(offsetWidth + drawingOffset, offsetHeight)
+
+window.addEventListener(`resize`, () => {
+  const { offsetHeight, offsetWidth } = document.getElementById(`gameHolder`)
+  cam.size.set(offsetWidth + drawingOffset, offsetHeight)
+  scene.width = offsetWidth + drawingOffset
+  scene.height = offsetHeight
+})
 
 async function main(ctx) {
   const entityFactory = await loadEntities()
@@ -19,7 +36,6 @@ async function main(ctx) {
   const keyboardInput = setupKeyboard(mario)
   keyboardInput.listenTo(window)
 
-  const cam = new Camera()
   const timer = new Timer()
   timer.update = function(delta) {
     lvl.update(delta)

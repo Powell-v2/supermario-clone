@@ -5,9 +5,9 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
   const tileResolver = new TileResolver(tiles)
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
-
-  buff.width = 450 + 16
-  buff.height = 300
+  const { offsetHeight } = document.getElementById(`gameHolder`)
+  buff.width = 2500
+  buff.height = offsetHeight
 
   function redraw(startIdx, endIdx) {
     ctx.clearRect(0, 0, buff.width, buff.height)

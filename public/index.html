@@ -1,11 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Mario Clone</title>
-    <script type="module" src="/public/main.js"></script>
-  </head>
-  <body>
-    <canvas id="scene" width="750px" height="500px"></canvas>
-  </body>
+<head>
+	<title>Responsive Mario Clone</title>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">\
+  <script type="module" src="/public/main.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    p {
+    	margin:0;
+    	padding:20px 0;
+    }
+
+    #pageContainer p {
+    	/* line-height:100%; */
+    }
+    #header {
+    	background-color:#4083c5;
+    	color:#fff;
+    	height:216px;
+    }
+    #top {
+    	height:80px;
+    }
+    #gameHolder {
+    	background-color:#dadada;
+    	height:300px;
+    	text-align:center;
+      overflow-x: hidden;
+    }
+
+    .headerInner {
+    	margin:0 auto;
+    	text-align:center;
+    }
+
+    .playerButton {
+    	background-color:#98bfe6;
+    	box-sizing:border-box;
+    	cursor:pointer;
+    	display:inline-block;
+    	height:150px;
+    	line-height:150px;
+    	margin:10px;
+    	padding:10px;
+    }
+
+    @media screen and (max-width: 699px) {
+    	.playerButton {
+    		width:40%;
+    	}
+    }
+    @media screen and (min-width: 700px) {
+    	.playerButton {
+    		width:30%;
+    	}
+    }
+    @media screen and (min-width: 1025px) and (max-width: 1199px) {
+    	.headerInner {
+    		width:980px;
+    	}
+    }
+    @media screen and (min-width: 1200px) {
+    	.headerInner {
+    		width:1180px;
+    	}
+    }
+  </style>
+</head>
+<body>
+  <div id="pageContainer">
+  	<div class="header" id="header">
+  		<div class="headerInner">
+  			<p>HEADER</p>
+  		</div>
+  	</div>
+  	<div id="top" class="headerInner">
+  		<p>Page Title</p>
+  	</div>
+  	<div id="gameHolder">
+  		<canvas id="scene"></canvas>
+  	</div>
+  	<div id="content" class="headerInner">
+  		<p>Rest of the content here</p>
+  		<div class="playerButton" id="playerOne">Start With Player 1</div>
+  		<div class="playerButton" id="playerTwo">Start With Player 2</div>
+  		<div class="playerButton" id="playerThree">Start With Player 3</div>
+  	</div>
+  </div>
+</body>
+
 </html>
