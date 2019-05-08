@@ -1,0 +1,85 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+p {
+  margin:0;
+  padding:20px 0;
+}
+
+#pageContainer p {
+  /* line-height:100%; */
+}
+#header {
+  background-color:#4083c5;
+  color:#fff;
+  height:216px;
+}
+#top {
+  height:80px;
+}
+#gameHolder {
+  background-color:#dadada;
+  height:300px;
+  text-align:center;
+  overflow: hidden;
+}
+#gameOverlay {
+  position: absolute;
+  height: inherit;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0,0,0,.75);
+  color: beige;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.headerInner {
+  margin:0 auto;
+  text-align:center;
+}
+
+.playerButton {
+  background-color:#98bfe6;
+  box-sizing:border-box;
+  cursor:pointer;
+  display:inline-block;
+  height:150px;
+  line-height:150px;
+  margin:10px;
+  padding:10px;
+  color: whitesmoke;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+#mario.playerButton {
+  background-color: firebrick;
+}
+#luigi.playerButton {
+  background-color: green;
+}
+
+@media screen and (max-width: 699px) {
+  .playerButton {
+    width:40%;
+  }
+}
+@media screen and (min-width: 700px) {
+  .playerButton {
+    width:30%;
+  }
+}
+@media screen and (min-width: 1025px) and (max-width: 1199px) {
+  .headerInner {
+    width:980px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .headerInner {
+    width:1180px;
+  }
+}

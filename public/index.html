@@ -3,74 +3,9 @@
 <head>
 	<title>Responsive Mario Clone</title>
   <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">\
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
   <script type="module" src="/public/main.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
-    p {
-    	margin:0;
-    	padding:20px 0;
-    }
-
-    #pageContainer p {
-    	/* line-height:100%; */
-    }
-    #header {
-    	background-color:#4083c5;
-    	color:#fff;
-    	height:216px;
-    }
-    #top {
-    	height:80px;
-    }
-    #gameHolder {
-    	background-color:#dadada;
-    	height:300px;
-    	text-align:center;
-      overflow-x: hidden;
-    }
-
-    .headerInner {
-    	margin:0 auto;
-    	text-align:center;
-    }
-
-    .playerButton {
-    	background-color:#98bfe6;
-    	box-sizing:border-box;
-    	cursor:pointer;
-    	display:inline-block;
-    	height:150px;
-    	line-height:150px;
-    	margin:10px;
-    	padding:10px;
-    }
-
-    @media screen and (max-width: 699px) {
-    	.playerButton {
-    		width:40%;
-    	}
-    }
-    @media screen and (min-width: 700px) {
-    	.playerButton {
-    		width:30%;
-    	}
-    }
-    @media screen and (min-width: 1025px) and (max-width: 1199px) {
-    	.headerInner {
-    		width:980px;
-    	}
-    }
-    @media screen and (min-width: 1200px) {
-    	.headerInner {
-    		width:1180px;
-    	}
-    }
-  </style>
+  <link rel="stylesheet" href="/public/index.css" />
 </head>
 <body>
   <div id="pageContainer">
@@ -83,13 +18,13 @@
   		<p>Page Title</p>
   	</div>
   	<div id="gameHolder">
+			<div id="gameOverlay">Pick character to start playing</div>
   		<canvas id="scene"></canvas>
   	</div>
   	<div id="content" class="headerInner">
-  		<p>Rest of the content here</p>
-  		<div class="playerButton" id="playerOne">Start With Player 1</div>
-  		<div class="playerButton" id="playerTwo">Start With Player 2</div>
-  		<div class="playerButton" id="playerThree">Start With Player 3</div>
+  		<p>Choose character:</p>
+  		<div class="playerButton" id="mario" data-name="mario">Mario</div>
+  		<div class="playerButton" id="luigi" data-name="luigi">Luigi</div>
   	</div>
   </div>
 </body>
