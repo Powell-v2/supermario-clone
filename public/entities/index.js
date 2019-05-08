@@ -1,5 +1,5 @@
 `use strict`
-import { loadMario } from './mario.js'
+import { loadHero } from './hero.js'
 import { loadGoomba } from './goomba.js'
 import { loadKoopa } from './koopa.js'
 
@@ -9,7 +9,8 @@ export default async function loadEntities() {
   const addAs = (name) => (factory) => factories[name] = factory
 
   await Promise.all([
-    loadMario().then(addAs(`mario`)),
+    loadHero(`mario`).then(addAs(`mario`)),
+    loadHero(`luigi`).then(addAs(`luigi`)),
     loadGoomba().then(addAs(`goomba`)),
     loadKoopa().then(addAs(`koopa`)),
   ])

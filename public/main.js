@@ -30,28 +30,58 @@ async function main(ctx) {
   const entityFactory = await loadEntities()
   const lvl = await createLevelLoader(entityFactory)(`1-1`)
 
-  const mario = entityFactory.mario()
-  mario.pos.set(64, 64)
-  lvl.entities.add(mario)
-
-  if (isMobile()) {
-    mario.run.direction = 1
-  }
-
-  const keyboardInput = setupKeyboard(mario)
-  keyboardInput.listenTo(window)
-
   const timer = new Timer()
   timer.update = function(delta) {
     lvl.update(delta)
 
-    if (mario.pos.x > 100) {
-      cam.pos.x = mario.pos.x - 100
-    }
-
     lvl.comp.draw(ctx, cam)
   }
   timer.start(0)
+
+  setupHandlers(lvl, entityFactory, timer)
+}
+
+function setupHandlers(lvl, entityFactory, timer) {
+  const playerSelectors = document.querySelectorAll(`.playerButton`)
+  const overlay = document.getElementById(`gameOverlay`)
+  const eventType = isMobile() ? `touchstart` : `click`
+
+  const handleSelect = (ev) => {
+    const { name } = ev.target.dataset
+    overlay.style.visibility = `hidden`
+
+    const mainCharacter = entityFactory[name]()
+    mainCharacter.pos.set(64, 64)
+    lvl.entities.add(mainCharacter)
+
+    const keyboardInput = setupKeyboard(mainCharacter)
+
+    if (isMobile()) {
+      mainCharacter.run.direction = 1
+      keyboardInput.listenTo(scene)
+    }
+    else {
+      keyboardInput.listenTo(window)
+    }
+
+    timer.update = function(delta) {
+      lvl.update(delta)
+
+      if (mainCharacter.pos.x > 100) {
+        cam.pos.x = mainCharacter.pos.x - 100
+      }
+
+      lvl.comp.draw(ctx, cam)
+    }
+
+    playerSelectors.forEach((button) => {
+      button.removeEventListener(eventType, handleSelect)
+    })
+  }
+
+  playerSelectors.forEach((button) => {
+    button.addEventListener(eventType, handleSelect)
+  })
 }
 
 main(ctx)
