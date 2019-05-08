@@ -2,6 +2,7 @@
 import Camera from './Camera.js'
 import Timer from './Timer.js'
 
+import { isMobile } from './utils/browser.js'
 import loadEntities from './entities/index.js'
 import { setupKeyboard } from './input.js'
 import { createLevelLoader } from './loaders/level.js'
@@ -32,6 +33,10 @@ async function main(ctx) {
   const mario = entityFactory.mario()
   mario.pos.set(64, 64)
   lvl.entities.add(mario)
+
+  if (isMobile()) {
+    mario.run.direction = 1
+  }
 
   const keyboardInput = setupKeyboard(mario)
   keyboardInput.listenTo(window)
