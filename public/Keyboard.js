@@ -28,7 +28,8 @@ class Keyboard {
     // Prevent default behaviour only for keyboard events.
     if (!isTouch) ev.preventDefault()
 
-    const state = (type === `keydown` || type === `touchstart`) ? PRESSED : RELEASED
+    const state = (type === `keydown` || type === `touchstart` || type === `mousedown`)
+      ? PRESSED : RELEASED
 
     if (this.states.get(code) === state) return
 
@@ -36,17 +37,23 @@ class Keyboard {
     this.actions.get(code)(state)
   }
 
-  listenTo(window) {
-    if (isMobile()) {
+  listenTo(target) {
+    if (isMobile() && ('ontouchstart' in window)) {
       const mobileEvents = [`touchstart`, `touchend`]
       mobileEvents.forEach((type) => {
-        window.addEventListener(type, (ev) => this.handleEvent(ev))
+        target.addEventListener(type, (ev) => this.handleEvent(ev))
+      })
+    }
+    else if (isMobile() && !('ontouchstart' in window)) {
+      const safariMobileEvents = [`mousedown`, `mouseup`]
+      safariMobileEvents.forEach((type) => {
+        target.addEventListener(type, (ev) => this.handleEvent(ev))
       })
     }
     else {
       const keyboardEvents = [`keydown`, `keyup`]
       keyboardEvents.forEach((type) => {
-        window.addEventListener(type, (ev) => this.handleEvent(ev))
+        target.addEventListener(type, (ev) => this.handleEvent(ev))
       })
     }
   }

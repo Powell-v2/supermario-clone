@@ -7,6 +7,7 @@ export function isMobile() {
   )
   return (
     mobileOsList.test(navigator.userAgent) &&
-    navigator.maxTouchPoints > 0
+    // Work around Safari's lack of support for `maxTouchPoints` prop
+    (navigator.maxTouchPoints ? navigator.maxTouchPoints > 0 : true)
   )
 }

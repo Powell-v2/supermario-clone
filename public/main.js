@@ -44,7 +44,8 @@ async function main(ctx) {
 function setupHandlers(lvl, entityFactory, timer) {
   const playerSelectors = document.querySelectorAll(`.playerButton`)
   const overlay = document.getElementById(`gameOverlay`)
-  const eventType = isMobile() ? `touchstart` : `click`
+  // Use 'click' in Safari as it doesn't support touch events
+  const eventType = (isMobile() && ('ontouchstart' in window)) ? `touchstart` : `click`
 
   const handleSelect = (ev) => {
     const { name } = ev.target.dataset
