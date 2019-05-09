@@ -28,12 +28,18 @@ class Entity {
     this[trait.NAME] = trait
   }
 
+  collides(subject) {
+    this.traits.forEach((trait) => trait.collides(this, subject))
+  }
+
+  draw() {}
+
   obstruct(side) {
     this.traits.forEach((trait) => trait.obstruct(this, side))
   }
 
-  update(delta) {
-    this.traits.forEach((trait) => trait.update(this, delta))
+  update(delta, lvl) {
+    this.traits.forEach((trait) => trait.update(this, delta, lvl))
 
     this.lifetime += delta
   }
@@ -44,13 +50,13 @@ class Trait {
     this.NAME = name
   }
 
-  update() {
-    console.warn(`Trait: unhandled update call.`)
-  }
-
-  obstruct() {
+  collides(us, them) {
 
   }
+
+  obstruct() {}
+
+  update() {}
 }
 
 export {

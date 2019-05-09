@@ -200,5 +200,14 @@
       ]
     }
   },
-  "entities": []
+  "entities": [
+    {
+      "name": "goomba",
+      "position": [300, 120]
+    },
+    {
+      "name": "koopa",
+      "position": [500, 15]
+    }
+  ]
 }

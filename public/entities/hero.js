@@ -2,6 +2,8 @@
 import Entity from '../Entity.js'
 import Jump from '../traits/Jump.js'
 import Run from '../traits/Run.js'
+import Stomp from '../traits/Stomp.js'
+import Killable from '../traits/Killable.js'
 
 import { loadSpritesheet } from '../loaders.js'
 
@@ -27,7 +29,7 @@ function createHeroFactory(sprite) {
     return `idle`
   }
 
-  function drawSprite(ctx) {
+  function drawHero(ctx) {
     const isFlipped = (this.run.facing === -1) ? true : false
     sprite.draw(routeFrame(this), ctx, 0, 0, isFlipped)
   }
@@ -40,11 +42,14 @@ function createHeroFactory(sprite) {
     const hero = new Entity()
     hero.addTrait(new Jump())
     hero.addTrait(new Run())
+    hero.addTrait(new Stomp())
+    hero.addTrait(new Killable())
     hero.size.set(14, 16)
+    hero.killable.removeAfter = 0
 
     routeFrame(hero)
 
-    hero.draw = drawSprite
+    hero.draw = drawHero
     hero.turbo = setTurboState
 
     return hero

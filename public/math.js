@@ -1,6 +1,6 @@
 `use strict`
 
-class Vector2 {
+export class Vector2 {
   constructor(x, y) {
     this.set(x, y)
   }
@@ -11,7 +11,7 @@ class Vector2 {
   }
 }
 
-class Matrix {
+export class Matrix {
   constructor() {
     this.grid = []
   }
@@ -33,9 +33,4 @@ class Matrix {
 
     this.grid[x][y] = val
   }
-}
-
-export {
-  Matrix,
-  Vector2,
 }

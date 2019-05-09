@@ -1,6 +1,8 @@
 `use strict`
 import Camera from './Camera.js'
 import Timer from './Timer.js'
+import Entity from './Entity.js'
+import PlayerController from './traits/PlayerController.js'
 
 import { isMobile } from './utils/browser.js'
 import loadEntities from './entities/index.js'
@@ -26,6 +28,17 @@ window.addEventListener(`resize`, () => {
   scene.height = offsetHeight
 })
 
+function createPlayerEnvironment(playerEnt) {
+  const playerEnv = new Entity()
+  const playerCtrl = new PlayerController()
+
+  playerCtrl.checkpoint.set(64, 64)
+  playerCtrl.setPlayer(playerEnt)
+  playerEnv.addTrait(playerCtrl)
+
+  return playerEnv
+}
+
 async function main(ctx) {
   const entityFactory = await loadEntities()
   const lvl = await createLevelLoader(entityFactory)(`1-1`)
@@ -48,17 +61,17 @@ function setupHandlers(lvl, entityFactory, timer) {
   const eventType = (isMobile() && ('ontouchstart' in window)) ? `touchstart` : `click`
 
   const handleSelect = (ev) => {
-    const { name } = ev.target.dataset
     overlay.style.visibility = `hidden`
 
-    const mainCharacter = entityFactory[name]()
-    mainCharacter.pos.set(64, 64)
-    lvl.entities.add(mainCharacter)
+    const { name } = ev.target.dataset
+    const hero = entityFactory[name]()
+    const playerEnv = createPlayerEnvironment(hero)
+    const keyboardInput = setupKeyboard(hero)
 
-    const keyboardInput = setupKeyboard(mainCharacter)
+    lvl.entities.add(playerEnv)
 
     if (isMobile()) {
-      mainCharacter.run.direction = 1
+      hero.run.direction = 1
       keyboardInput.listenTo(scene)
     }
     else {
@@ -68,9 +81,7 @@ function setupHandlers(lvl, entityFactory, timer) {
     timer.update = function(delta) {
       lvl.update(delta)
 
-      if (mainCharacter.pos.x > 100) {
-        cam.pos.x = mainCharacter.pos.x - 100
-      }
+      cam.pos.x = Math.max(0, hero.pos.x - 100)
 
       lvl.comp.draw(ctx, cam)
     }

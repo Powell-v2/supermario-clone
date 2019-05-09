@@ -1,6 +1,7 @@
 `use strict`
 import Compositor from './Compositor.js'
 import TileCollider from './TileCollider.js'
+import EntityCollider from './EntityCollider.js'
 
 class Level {
   constructor() {
@@ -10,6 +11,7 @@ class Level {
     this.gravity = 1500
     this.totalTime = 0
 
+    this.entityCollider = new EntityCollider(this.entities)
     this.tileCollider = null
   }
 
@@ -23,7 +25,7 @@ class Level {
     this.entities.forEach((ent) => {
       const { pos, vel } = ent
 
-      ent.update(delta)
+      ent.update(delta, this)
 
       pos.x += vel.x * delta
       this.tileCollider.checkX(ent)
@@ -32,6 +34,10 @@ class Level {
       this.tileCollider.checkY(ent)
 
       ent.vel.y += this.gravity * delta
+    })
+
+    this.entities.forEach((ent) => {
+      this.entityCollider.check(ent)
     })
   }
 }
