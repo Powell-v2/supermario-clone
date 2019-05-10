@@ -37,7 +37,7 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
 
     ctx.drawImage(
       buff,
-      -cam.pos.x % 16,
+      -cam.pos.x % 35,
       -cam.pos.y
     )
   }

@@ -1,36 +1,18 @@
 {
-  "spritesheet": "overworld",
+  "spritesheet": "arcade",
   "layers": [
     {
       "tiles": [
         {
           "name": "sky",
           "ranges": [
-            [0, 250, 0, 14]
+            [0, 200, 0, 10]
           ]
         },
         {
-          "name": "ground",
-          "type": "ground",
+          "pattern": "bricks",
           "ranges": [
-            [0, 250, 14, 5]
-          ]
-        },
-        {
-          "name": "sky",
-          "ranges": [
-            [25, 3, 14, 5]
-          ]
-        },
-        {
-          "name": "metal",
-          "type": "ground",
-          "ranges": [
-            [24, 13],
-            [2, 2, 12],
-            [24, 12],
-            [28, 13],
-            [28, 12]
+            [0, 200, 10, 1]
           ]
         }
       ]
@@ -38,164 +20,374 @@
     {
       "tiles": [
         {
-          "name": "bricks",
+          "name": "11_ball",
           "type": "ground",
           "ranges": [
-            [15, 7, 9, 1]
+            [4, 6]
           ]
         },
         {
-          "name": "question",
+          "name": "8_ball",
           "type": "ground",
           "ranges": [
-            [16, 9],
-            [18, 9],
-            [20, 9],
-            [11, 9],
-            [100, 1, 0, 14]
+            [5, 6]
           ]
         },
         {
-          "pattern": "pipe_vert",
+          "name": "chalk",
+          "type": "ground",
           "ranges": [
-            [0, 12],
-            [40, 12]
+            [0, 4, 9, 1],
+            [0, 3, 8, 1],
+            [0, 2, 7, 1]
           ]
         },
         {
-          "pattern": "pipe_vert_2h",
+          "pattern": "dart",
           "ranges": [
-            [45, 11]
+            [8, 7]
           ]
         },
         {
-          "pattern": "pipe_vert_3h",
+          "pattern": "pool_table",
           "ranges": [
-            [50, 10]
+            [14, 8]
           ]
         },
         {
-          "pattern": "cloud_single",
+          "pattern": "arcade_machine",
           "ranges": [
-            [8, 3]
+            [20, 6]
+          ]
+        },
+        {
+          "pattern": "skyscraper",
+          "ranges": [
+            [30, 2]
+          ]
+        },
+        {
+          "pattern": "cloud",
+          "ranges": [
+            [1, 1]
           ]
         }
       ]
     }
   ],
   "patterns": {
-    "pipe_vert_top": {
+    "bricks": {
       "tiles": [
         {
-          "name": "pipe_vert_top_left",
+          "name": "bricks_1",
           "type": "ground",
-          "ranges": [
-            [0, 0]
-          ]
-        },
-        {
-          "name": "pipe_vert_top_right",
-          "type": "ground",
-          "ranges": [
-            [1, 0]
-          ]
-        }
-      ]
-    },
-    "pipe_vert_bot": {
-      "tiles": [
-        {
-          "name": "pipe_vert_bot_left",
-          "type": "ground",
-          "ranges": [
-            [0, 0]
-          ]
-        },
-        {
-          "name": "pipe_vert_bot_right",
-          "type": "ground",
-          "ranges": [
-            [1, 0]
-          ]
-        }
-      ]
-    },
-    "pipe_vert": {
-      "tiles": [
-        {
-          "pattern": "pipe_vert_top",
-          "ranges": [
-            [0, 0]
-          ]
-        },
-        {
-          "pattern": "pipe_vert_bot",
-          "ranges": [
-            [0, 1]
-          ]
-        }
-      ]
-    },
-    "pipe_vert_2h": {
-      "tiles": [
-        {
-          "pattern": "pipe_vert_top",
-          "ranges": [
-            [0, 0]
-          ]
-        },
-        {
-          "pattern": "pipe_vert_bot",
-          "ranges": [
-            [0, 1],
-            [0, 2]
-          ]
-        }
-      ]
-    },
-    "pipe_vert_3h": {
-      "tiles": [
-        {
-          "pattern": "pipe_vert_top",
-          "ranges": [
-            [0, 0]
-          ]
-        },
-        {
-          "pattern": "pipe_vert_bot",
-          "ranges": [
-            [0, 1],
-            [0, 2],
-            [0, 3]
-          ]
-        }
-      ]
-    },
-    "cloud_single": {
-      "tiles": [
-        {
-          "name": "cloud_1_top_left",
           "ranges": [[0, 0]]
         },
         {
-          "name": "cloud_1_top_mid",
+          "name": "bricks_2",
+          "type": "ground",
           "ranges": [[1, 0]]
+        }
+      ]
+    },
+    "dart": {
+      "tiles": [
+        {
+          "name": "dart_1",
+          "type": "ground",
+          "ranges": [[0, 0]]
         },
         {
-          "name": "cloud_1_top_right",
-          "ranges": [[2, 0]]
-        },
-        {
-          "name": "cloud_1_bot_left",
+          "name": "dart_2",
+          "type": "ground",
           "ranges": [[0, 1]]
         },
         {
-          "name": "cloud_1_bot_mid",
+          "name": "dart_3",
+          "type": "ground",
+          "ranges": [[0, 2]]
+        }
+      ]
+    },
+    "pool_table": {
+      "tiles": [
+        {
+          "name": "pool_table_1_1",
+          "type": "ground",
+          "ranges": [[0, 0]]
+        },
+        {
+          "name": "pool_table_1_2",
+          "type": "ground",
+          "ranges": [[1, 0]]
+        },
+        {
+          "name": "pool_table_1_3",
+          "type": "ground",
+          "ranges": [[2, 0]]
+        },
+        {
+          "name": "pool_table_2_1",
+          "type": "ground",
+          "ranges": [[0, 1]]
+        },
+        {
+          "name": "pool_table_2_2",
+          "type": "ground",
           "ranges": [[1, 1]]
         },
         {
-          "name": "cloud_1_bot_right",
+          "name": "pool_table_2_3",
+          "type": "ground",
           "ranges": [[2, 1]]
+        }
+      ]
+    },
+    "arcade_machine": {
+      "tiles": [
+        {
+          "name": "arcade_machine_1_1",
+          "type": "ground",
+          "ranges": [[0, 0]]
+        },
+        {
+          "name": "arcade_machine_1_2",
+          "type": "ground",
+          "ranges": [[1, 0]]
+        },
+        {
+          "name": "arcade_machine_1_3",
+          "type": "ground",
+          "ranges": [[2, 0]]
+        },
+        {
+          "name": "arcade_machine_2_1",
+          "type": "ground",
+          "ranges": [[0, 1]]
+        },
+        {
+          "name": "arcade_machine_2_2",
+          "type": "ground",
+          "ranges": [[1, 1]]
+        },
+        {
+          "name": "arcade_machine_2_3",
+          "type": "ground",
+          "ranges": [[2, 1]]
+        },
+        {
+          "name": "arcade_machine_3_1",
+          "type": "ground",
+          "ranges": [[0, 2]]
+        },
+        {
+          "name": "arcade_machine_3_2",
+          "type": "ground",
+          "ranges": [[1, 2]]
+        },
+        {
+          "name": "arcade_machine_3_3",
+          "type": "ground",
+          "ranges": [[2, 2]]
+        },
+        {
+          "name": "arcade_machine_4_1",
+          "type": "ground",
+          "ranges": [[0, 3]]
+        },
+        {
+          "name": "arcade_machine_4_2",
+          "type": "ground",
+          "ranges": [[1, 3]]
+        },
+        {
+          "name": "arcade_machine_3_3",
+          "type": "ground",
+          "ranges": [[2, 3]]
+        }
+      ]
+    },
+    "skyscraper": {
+      "tiles": [
+        {
+          "name": "skyscraper_1_1",
+          "ranges": [[0, 0]]
+        },
+        {
+          "name": "skyscraper_1_2",
+          "ranges": [[1, 0]]
+        },
+        {
+          "name": "skyscraper_1_3",
+          "ranges": [[2, 0]]
+        },
+        {
+          "name": "skyscraper_1_4",
+          "ranges": [[3, 0]]
+        },
+        {
+          "name": "skyscraper_2_1",
+          "ranges": [[0, 1]]
+        },
+        {
+          "name": "skyscraper_2_2",
+          "ranges": [[1, 1]]
+        },
+        {
+          "name": "skyscraper_2_3",
+          "ranges": [[2, 1]]
+        },
+        {
+          "name": "skyscraper_2_4",
+          "ranges": [[3, 1]]
+        },
+        {
+          "name": "skyscraper_3_1",
+          "ranges": [[0, 2]]
+        },
+        {
+          "name": "skyscraper_3_2",
+          "ranges": [[1, 2]]
+        },
+        {
+          "name": "skyscraper_3_3",
+          "ranges": [[2, 2]]
+        },
+        {
+          "name": "skyscraper_3_4",
+          "ranges": [[3, 2]]
+        },
+        {
+          "name": "skyscraper_4_1",
+          "ranges": [[0, 3]]
+        },
+        {
+          "name": "skyscraper_4_2",
+          "ranges": [[1, 3]]
+        },
+        {
+          "name": "skyscraper_4_3",
+          "ranges": [[2, 3]]
+        },
+        {
+          "name": "skyscraper_4_4",
+          "ranges": [[3, 3]]
+        },
+        {
+          "name": "skyscraper_5_1",
+          "ranges": [[0, 4]]
+        },
+        {
+          "name": "skyscraper_5_2",
+          "ranges": [[1, 4]]
+        },
+        {
+          "name": "skyscraper_5_3",
+          "ranges": [[2, 4]]
+        },
+        {
+          "name": "skyscraper_5_4",
+          "ranges": [[3, 4]]
+        },
+        {
+          "name": "skyscraper_6_1",
+          "ranges": [[0, 5]]
+        },
+        {
+          "name": "skyscraper_6_2",
+          "ranges": [[1, 5]]
+        },
+        {
+          "name": "skyscraper_6_3",
+          "ranges": [[2, 5]]
+        },
+        {
+          "name": "skyscraper_6_4",
+          "ranges": [[3, 5]]
+        },
+        {
+          "name": "skyscraper_7_1",
+          "ranges": [[0, 6]]
+        },
+        {
+          "name": "skyscraper_7_2",
+          "ranges": [[1, 6]]
+        },
+        {
+          "name": "skyscraper_7_3",
+          "ranges": [[2, 6]]
+        },
+        {
+          "name": "skyscraper_7_4",
+          "ranges": [[3, 6]]
+        },
+        {
+          "name": "skyscraper_8_1",
+          "ranges": [[0, 7]]
+        },
+        {
+          "name": "skyscraper_8_2",
+          "ranges": [[1, 7]]
+        },
+        {
+          "name": "skyscraper_8_3",
+          "ranges": [[2, 7]]
+        },
+        {
+          "name": "skyscraper_8_4",
+          "ranges": [[3, 7]]
+        }
+      ]
+    },
+    "cloud": {
+      "tiles": [
+        {
+          "name": "cloud_1_1",
+          "ranges": [[0, 0]]
+        },
+        {
+          "name": "cloud_1_2",
+          "ranges": [[1, 0]]
+        },
+        {
+          "name": "cloud_1_3",
+          "ranges": [[2, 0]]
+        },
+        {
+          "name": "cloud_1_4",
+          "ranges": [[3, 0]]
+        },
+        {
+          "name": "cloud_1_5",
+          "ranges": [[4, 0]]
+        },
+        {
+          "name": "cloud_1_6",
+          "ranges": [[5, 0]]
+        },
+        {
+          "name": "cloud_2_1",
+          "ranges": [[0, 1]]
+        },
+        {
+          "name": "cloud_2_2",
+          "ranges": [[1, 1]]
+        },
+        {
+          "name": "cloud_2_3",
+          "ranges": [[2, 1]]
+        },
+        {
+          "name": "cloud_2_4",
+          "ranges": [[3, 1]]
+        },
+        {
+          "name": "cloud_2_5",
+          "ranges": [[4, 1]]
+        },
+        {
+          "name": "cloud_2_6",
+          "ranges": [[5, 1]]
         }
       ]
     }

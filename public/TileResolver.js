@@ -1,7 +1,7 @@
 `use strict`
 
 class TileResolver {
-  constructor(matrix, tileSize = 16) {
+  constructor(matrix, tileSize = 35) {
     this.matrix = matrix
     this.tileSize = tileSize
   }

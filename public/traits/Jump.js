@@ -9,12 +9,12 @@ class Jump extends Trait {
     // when being sandwitched between 2 tiles.
     this.isReady = 0
     this.duration = 0.3
-    this.velocity = 225
+    this.velocity = 350
     this.engagedTime = 0
     this.requestTime = 0
     // Allow for initiating a jump again without hitting the ground.
     this.gracePeriod = 0.3
-    this.speedBoost = 0.2
+    this.speedBoost = 0.22
   }
 
   get isFalling() {

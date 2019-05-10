@@ -14,7 +14,7 @@ const ctx = scene.getContext(`2d`)
 const { offsetHeight, offsetWidth } = document.getElementById(`gameHolder`)
 // Extend scene and camera sizes by this value to
 // hide the process of drawing new tile columns.
-const drawingOffset = 32
+const drawingOffset = 70
 scene.width = offsetWidth + drawingOffset
 scene.height = offsetHeight
 

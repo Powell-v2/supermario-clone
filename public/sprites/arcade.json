@@ -1,0 +1,314 @@
+{
+  "imageURL": "/public/assets/backgrounds.png",
+  "tileW": 35,
+  "tileH": 35,
+  "tiles": [
+    {
+      "name": "bricks_1",
+      "index": [4, 0]
+    },
+    {
+      "name": "bricks_2",
+      "index": [5, 0]
+    },
+    {
+      "name": "sky",
+      "index": [3, 0]
+    },
+    {
+      "name": "chalk",
+      "index": [0, 0]
+    },
+    {
+      "name": "11_ball",
+      "index": [1, 0]
+    },
+    {
+      "name": "dart_1",
+      "index": [2, 0]
+    },
+    {
+      "name": "dart_2",
+      "index": [2, 1]
+    },
+    {
+      "name": "dart_3",
+      "index": [2, 2]
+    },
+    {
+      "name": "pool_table_1_1",
+      "index": [0, 3]
+    },
+    {
+      "name": "pool_table_1_2",
+      "index": [1, 3]
+    },
+    {
+      "name": "pool_table_1_3",
+      "index": [2, 3]
+    },
+    {
+      "name": "pool_table_2_1",
+      "index": [0, 4]
+    },
+    {
+      "name": "pool_table_2_2",
+      "index": [1, 4]
+    },
+    {
+      "name": "pool_table_2_3",
+      "index": [2, 4]
+    },
+    {
+      "name": "arcade_machine_1_1",
+      "index": [3, 3]
+    },
+    {
+      "name": "arcade_machine_1_2",
+      "index": [4, 3]
+    },
+    {
+      "name": "arcade_machine_1_3",
+      "index": [5, 3]
+    },
+    {
+      "name": "arcade_machine_2_1",
+      "index": [3, 4]
+    },
+    {
+      "name": "arcade_machine_2_2",
+      "index": [4, 4]
+    },
+    {
+      "name": "arcade_machine_2_3",
+      "index": [5, 4]
+    },
+    {
+      "name": "arcade_machine_3_1",
+      "index": [3, 5]
+    },
+    {
+      "name": "arcade_machine_3_2",
+      "index": [4, 5]
+    },
+    {
+      "name": "arcade_machine_3_3",
+      "index": [5, 5]
+    },
+    {
+      "name": "arcade_machine_4_1",
+      "index": [3, 6]
+    },
+    {
+      "name": "arcade_machine_4_2",
+      "index": [4, 6]
+    },
+    {
+      "name": "arcade_machine_4_3",
+      "index": [5, 6]
+    },
+    {
+      "name": "8_ball_1",
+      "index": [0, 7]
+    },
+    {
+      "name": "8_ball_2",
+      "index": [1, 7]
+    },
+    {
+      "name": "8_ball_3",
+      "index": [2, 7]
+    },
+    {
+      "name": "8_ball_4",
+      "index": [3, 7]
+    },
+    {
+      "name": "skyscraper_1_1",
+      "index": [0, 8]
+    },
+    {
+      "name": "skyscraper_1_2",
+      "index": [1, 8]
+    },
+    {
+      "name": "skyscraper_1_3",
+      "index": [2, 8]
+    },
+    {
+      "name": "skyscraper_1_4",
+      "index": [3, 8]
+    },
+    {
+      "name": "skyscraper_2_1",
+      "index": [0, 9]
+    },
+    {
+      "name": "skyscraper_2_2",
+      "index": [1, 9]
+    },
+    {
+      "name": "skyscraper_2_3",
+      "index": [2, 9]
+    },
+    {
+      "name": "skyscraper_2_4",
+      "index": [3, 9]
+    },
+    {
+      "name": "skyscraper_3_1",
+      "index": [0, 10]
+    },
+    {
+      "name": "skyscraper_3_2",
+      "index": [1, 10]
+    },
+    {
+      "name": "skyscraper_3_3",
+      "index": [2, 10]
+    },
+    {
+      "name": "skyscraper_3_4",
+      "index": [3, 10]
+    },
+    {
+      "name": "skyscraper_4_1",
+      "index": [0, 11]
+    },
+    {
+      "name": "skyscraper_4_2",
+      "index": [1, 11]
+    },
+    {
+      "name": "skyscraper_4_3",
+      "index": [2, 11]
+    },
+    {
+      "name": "skyscraper_4_4",
+      "index": [3, 11]
+    },
+    {
+      "name": "skyscraper_5_1",
+      "index": [0, 12]
+    },
+    {
+      "name": "skyscraper_5_2",
+      "index": [1, 12]
+    },
+    {
+      "name": "skyscraper_5_3",
+      "index": [2, 12]
+    },
+    {
+      "name": "skyscraper_5_4",
+      "index": [3, 12]
+    },
+    {
+      "name": "skyscraper_6_1",
+      "index": [0, 13]
+    },
+    {
+      "name": "skyscraper_6_2",
+      "index": [1, 13]
+    },
+    {
+      "name": "skyscraper_6_3",
+      "index": [2, 13]
+    },
+    {
+      "name": "skyscraper_6_4",
+      "index": [3, 13]
+    },
+    {
+      "name": "skyscraper_7_1",
+      "index": [0, 14]
+    },
+    {
+      "name": "skyscraper_7_2",
+      "index": [1, 14]
+    },
+    {
+      "name": "skyscraper_7_3",
+      "index": [2, 14]
+    },
+    {
+      "name": "skyscraper_7_4",
+      "index": [3, 14]
+    },
+    {
+      "name": "skyscraper_8_1",
+      "index": [0, 15]
+    },
+    {
+      "name": "skyscraper_8_2",
+      "index": [1, 15]
+    },
+    {
+      "name": "skyscraper_8_3",
+      "index": [2, 15]
+    },
+    {
+      "name": "skyscraper_8_4",
+      "index": [3, 15]
+    },
+    {
+      "name": "cloud_1_1",
+      "index": [0, 16]
+    },
+    {
+      "name": "cloud_1_2",
+      "index": [1, 16]
+    },
+    {
+      "name": "cloud_1_3",
+      "index": [2, 16]
+    },
+    {
+      "name": "cloud_1_4",
+      "index": [3, 16]
+    },
+    {
+      "name": "cloud_1_5",
+      "index": [4, 16]
+    },
+    {
+      "name": "cloud_1_6",
+      "index": [5, 16]
+    },
+    {
+      "name": "cloud_2_1",
+      "index": [0, 17]
+    },
+    {
+      "name": "cloud_2_2",
+      "index": [1, 17]
+    },
+    {
+      "name": "cloud_2_3",
+      "index": [2, 17]
+    },
+    {
+      "name": "cloud_2_4",
+      "index": [3, 17]
+    },
+    {
+      "name": "cloud_2_5",
+      "index": [4, 17]
+    },
+    {
+      "name": "cloud_2_6",
+      "index": [5, 17]
+    }
+  ],
+  "animations": [
+    {
+      "name": "8_ball",
+      "frameLen": 0.15,
+      "frames": [
+        "8_ball_1",
+        "8_ball_2",
+        "8_ball_3"
+      ]
+    }
+  ]
+}
