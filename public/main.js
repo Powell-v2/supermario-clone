@@ -32,7 +32,7 @@ function createPlayerEnvironment(playerEnt) {
   const playerEnv = new Entity()
   const playerCtrl = new PlayerController()
 
-  playerCtrl.checkpoint.set(64, 64)
+  playerCtrl.checkpoint.set(105, 105)
   playerCtrl.setPlayer(playerEnt)
   playerEnv.addTrait(playerCtrl)
 
@@ -81,7 +81,9 @@ function setupHandlers(lvl, entityFactory, timer) {
     timer.update = function(delta) {
       lvl.update(delta)
 
-      cam.pos.x = Math.max(0, hero.pos.x - 105)
+      // Limit camerate movement to 2260px - which is the rightmost edge of the level.
+      // Behind the edge there is a wall of tiles which blocks the character.
+      cam.pos.x = Math.max(0, Math.min(hero.pos.x - 105, 2260))
 
       lvl.comp.draw(ctx, cam)
     }
