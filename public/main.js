@@ -81,7 +81,7 @@ function setupHandlers(lvl, entityFactory, timer) {
     timer.update = function(delta) {
       lvl.update(delta)
 
-      cam.pos.x = Math.max(0, hero.pos.x - 100)
+      cam.pos.x = Math.max(0, hero.pos.x - 105)
 
       lvl.comp.draw(ctx, cam)
     }

@@ -6,7 +6,8 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
   const buff = document.createElement(`canvas`)
   const ctx = buff.getContext(`2d`)
   const { offsetHeight } = document.getElementById(`gameHolder`)
-  buff.width = 2500
+  // HACK: define buffer's width based on window width!
+  buff.width = 1500
   buff.height = offsetHeight
 
   function redraw(startIdx, endIdx) {
