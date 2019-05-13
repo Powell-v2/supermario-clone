@@ -54,6 +54,10 @@ class Jump extends Trait {
     }
 
     this.isReady -= 1
+
+    if (entity.pos.y >= 350) {
+      entity.killable.kill()
+    }
   }
 }
 
