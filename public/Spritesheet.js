@@ -49,13 +49,48 @@ class Spritesheet {
   }
 
   drawTile(name, ctx, x, y) {
-    const buffer = this.tileset.get(name)[1]
-    ctx.drawImage(buffer, x * this.width, y * this.height)
+    const buff = this.tileset.get(name)[1]
+    ctx.drawImage(buff, x * this.width, y * this.height)
+  }
+
+  drawShards(ctx, buff, size, idxX, idxY, delta) {
+    const width = this.width / size
+    const height = this.height / size
+    const mult = 2.5
+
+    for (let sc = 0; sc < size; sc += 1) {
+      const isLeftHalf = sc < size / 2
+      // TODO: Find multiplier for c to properly offset columns
+      const toX = (idxX + (isLeftHalf ? -delta : delta)) * this.width
+
+      for (let sr = 0; sr < size; sr += 1) {
+        const toY = (idxY + (delta**2 - delta * (mult - 0.5 * sr))) * this.height
+        const sx = width * sc
+        const sy = height * sr
+        const dx = toX + width * sc
+        const dy = toY + height * sr
+
+        // TODO: Find a way to rotate individual shards
+        ctx.drawImage(
+          buff,
+          sx, sy,
+          // sW, sH
+          width, height,
+          dx, dy,
+          // dW, dH
+          width, height
+        )
+      }
+    }
+  }
+
+  shredTile(name, ctx, idxX, idxY, delta) {
+    const buff = this.tileset.get(name)[1]
+    this.drawShards(ctx, buff, 2, idxX, idxY, delta)
   }
 
   drawAnimation(name, ctx, x, y, distance) {
     const animation = this.animations.get(name)
-
     this.drawTile(animation(distance), ctx, x, y)
   }
 }

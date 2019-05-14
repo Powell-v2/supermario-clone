@@ -3,8 +3,8 @@ import TileResolver from './TileResolver.js'
 import { SIDES } from './Entity.js'
 
 class TileCollider {
-  constructor(tilesMatrix) {
-    this.tiles = new TileResolver(tilesMatrix)
+  constructor(collisionMatrix) {
+    this.tiles = new TileResolver(collisionMatrix)
   }
 
   checkX(entity) {
@@ -45,7 +45,7 @@ class TileCollider {
     })
   }
 
-  checkY(entity) {
+  checkY(entity, interactionGrid) {
     let y
 
     if (entity.vel.y > 0) y = entity.bounds.bottom
@@ -77,6 +77,17 @@ class TileCollider {
           entity.vel.y = 0
 
           entity.obstruct(SIDES.TOP)
+
+          if (match.tile.destroyable) {
+            const x = this.tiles.toIndex(match.xLeft)
+            const y = this.tiles.toIndex(match.yTop)
+            interactionGrid.set(x, y, {
+              ...match.tile,
+              remove: true,
+              touchedAt: performance.now()
+            })
+            this.tiles.matrix.replaceOne(x, y, { name: `sky` })
+          }
         }
       }
     })

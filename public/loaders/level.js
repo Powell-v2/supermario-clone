@@ -10,14 +10,15 @@ function setupCollision({ layers, patterns }, lvl) {
     return acc.concat(layer.tiles)
   }, [])
 
-  const collisionGrid = createCollisionGrid(mergedTiles, patterns)
-  lvl.setCollisionGrid(collisionGrid)
+  lvl.setCollisionGrid(createGrid(mergedTiles, patterns))
 }
 
 function setupBackgrounds({ layers, patterns }, lvl, bgSprites) {
-  layers.forEach((layer) => {
-    const bgGrid = createBackgroundGrid(layer.tiles, patterns)
+  layers.forEach((layer, i) => {
+    const bgGrid = createGrid(layer.tiles, patterns)
     lvl.comp.layers.push(createBackgroundLayer(lvl, bgGrid, bgSprites))
+    // TODO: Find better way to identify grid containing interactive tiles
+    if (i === 1) lvl.interactionGrid = bgGrid
   })
 }
 
@@ -46,25 +47,12 @@ function createLevelLoader(entityFactory) {
   }
 }
 
-function createCollisionGrid(tiles, patterns) {
+function createGrid(tiles, patterns) {
   const matrix = new Matrix()
 
   for (const { x, y, tile } of expandTiles(tiles, patterns)) {
-    const { type } = tile
-
-    matrix.set(x, y, { type })
-  }
-
-  return matrix
-}
-
-function createBackgroundGrid(tiles, patterns) {
-  const matrix = new Matrix()
-
-  for (const { x, y, tile } of expandTiles(tiles, patterns)) {
-    const { name } = tile
-
-    matrix.set(x, y, { name })
+    const { name, type, destroyable } = tile
+    matrix.set(x, y, { name, type, destroyable })
   }
 
   return matrix

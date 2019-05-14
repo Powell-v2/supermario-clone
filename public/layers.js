@@ -21,7 +21,15 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
             sprites.drawAnimation(tile.name, ctx, x - startIdx, y, lvl.totalTime)
           }
           else {
-            sprites.drawTile(tile.name, ctx, x - startIdx, y)
+            if (tile.destroyable && tile.remove) {
+              const delta = lvl.totalTime - tile.touchedAt / 1000
+              delta < 2
+                ? sprites.shredTile(tile.name, ctx, x - startIdx, y, delta * 5)
+                : tiles.removeOne(x, y)
+            }
+            else {
+              sprites.drawTile(tile.name, ctx, x - startIdx, y)
+            }
           }
         })
       }
@@ -58,7 +66,8 @@ const createSpriteLayer = (entities, width = 64, height = 64) => {
 
       ctx.drawImage(
         spriteBuff,
-        ent.pos.x - cam.pos.x, ent.pos.y - cam.pos.y
+        ent.pos.x - cam.pos.x,
+        ent.pos.y - cam.pos.y
       )
     })
   }
@@ -76,7 +85,7 @@ const createCollisionLayer = (lvl) => {
     return getByIndexOrig.call(tileResolver, x, y)
   }
 
-  return function drawCollision(ctx, cam) {
+  return function drawCollisionRects(ctx, cam) {
     ctx.strokeStyle = `green`
     resolvedTiles.forEach(({ x, y }) => {
       ctx.beginPath()

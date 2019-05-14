@@ -13,6 +13,8 @@ class Level {
 
     this.entityCollider = new EntityCollider(this.entities)
     this.tileCollider = null
+
+    this.interactionGrid = null
   }
 
   setCollisionGrid(matrix) {
@@ -23,15 +25,13 @@ class Level {
     this.totalTime += delta
 
     this.entities.forEach((ent) => {
-      const { pos, vel } = ent
-
       ent.update(delta, this)
 
-      pos.x += vel.x * delta
+      ent.pos.x += ent.vel.x * delta
       this.tileCollider.checkX(ent)
 
-      pos.y += vel.y * delta
-      this.tileCollider.checkY(ent)
+      ent.pos.y += ent.vel.y * delta
+      this.tileCollider.checkY(ent, this.interactionGrid)
 
       ent.vel.y += this.gravity * delta
     })

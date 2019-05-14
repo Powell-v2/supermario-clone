@@ -30,6 +30,7 @@
         {
           "name": "11_ball",
           "type": "ground",
+          "destroyable": true,
           "ranges": [
             [-1, 1, 0, 10],
             [92, 1, 0, 10],

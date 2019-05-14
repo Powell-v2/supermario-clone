@@ -33,4 +33,14 @@ export class Matrix {
 
     this.grid[x][y] = val
   }
+
+  removeOne(x, y) {
+    const col = this.grid[x]
+    col.splice(y, 1)
+  }
+
+  replaceOne(x, y, val) {
+    const col = this.grid[x]
+    col.splice(y, 1, val)
+  }
 }
