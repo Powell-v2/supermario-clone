@@ -81,7 +81,7 @@ function setupHandlers(lvl, entityFactory, timer) {
     timer.update = function(delta) {
       lvl.update(delta)
 
-      // Limit camerate movement to 2260px - which is the rightmost edge of the level.
+      // Limit camera movement to 2260px - which is the rightmost edge of the level.
       // Behind the edge there is a wall of tiles which blocks the character.
       cam.pos.x = Math.max(0, Math.min(hero.pos.x - 105, 2260))
 

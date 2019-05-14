@@ -50,9 +50,7 @@ class Trait {
     this.NAME = name
   }
 
-  collides(us, them) {
-
-  }
+  collides(_us, _them) {}
 
   obstruct() {}
 

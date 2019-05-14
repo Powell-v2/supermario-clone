@@ -47,8 +47,6 @@ function createHeroFactory(sprite) {
     hero.size.set(16, 32)
     hero.killable.removeAfter = 0
 
-    routeFrame(hero)
-
     hero.draw = drawHero
     hero.turbo = setTurboState
 
