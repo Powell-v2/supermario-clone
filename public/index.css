@@ -56,11 +56,8 @@ p {
   font-size: 1.3rem;
   text-transform: uppercase;
 }
-#mario.playerButton {
-  background-color: firebrick;
-}
-#luigi.playerButton {
-  background-color: green;
+#indigoMan.playerButton {
+  background-color: darkblue;
 }
 
 @media screen and (max-width: 699px) {

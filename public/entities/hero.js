@@ -44,7 +44,7 @@ function createHeroFactory(sprite) {
     hero.addTrait(new Run())
     hero.addTrait(new Stomp())
     hero.addTrait(new Killable())
-    hero.size.set(16, 32)
+    hero.size.set(25, 45)
     hero.killable.removeAfter = 0
 
     hero.draw = drawHero
