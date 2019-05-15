@@ -20,8 +20,28 @@
       "index": [0, 0]
     },
     {
+      "name": "coin",
+      "index": [0, 1]
+    },
+    {
       "name": "11_ball",
       "index": [1, 0]
+    },
+    {
+      "name": "8_ball_1",
+      "index": [0, 7]
+    },
+    {
+      "name": "8_ball_2",
+      "index": [1, 7]
+    },
+    {
+      "name": "8_ball_3",
+      "index": [2, 7]
+    },
+    {
+      "name": "8_ball_off",
+      "index": [3, 7]
     },
     {
       "name": "dart_1",
@@ -106,22 +126,6 @@
     {
       "name": "arcade_machine_4_3",
       "index": [5, 6]
-    },
-    {
-      "name": "8_ball_1",
-      "index": [0, 7]
-    },
-    {
-      "name": "8_ball_2",
-      "index": [1, 7]
-    },
-    {
-      "name": "8_ball_3",
-      "index": [2, 7]
-    },
-    {
-      "name": "8_ball_4",
-      "index": [3, 7]
     },
     {
       "name": "skyscraper_1_1",

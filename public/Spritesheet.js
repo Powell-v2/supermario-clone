@@ -16,6 +16,11 @@ class Spritesheet {
       buff.width = width
       buff.height = height
 
+      if (name === `coin`) {
+        buffCtx.scale(0.75, 0.75)
+        buffCtx.translate(width * 0.75 * (1 - 0.75), height * 0.75 * (1 - 0.75))
+      }
+
       if (isFlipped) {
         buffCtx.scale(-1, 1)
         buffCtx.translate(-width, 0)
@@ -44,8 +49,8 @@ class Spritesheet {
   }
 
   draw(name, ctx, x, y, isFlipped = false) {
-    const buffer = this.tileset.get(name)[isFlipped ? 0 : 1]
-    ctx.drawImage(buffer, x, y)
+    const buff = this.tileset.get(name)[isFlipped ? 0 : 1]
+    ctx.drawImage(buff, x, y)
   }
 
   drawTile(name, ctx, x, y) {
@@ -53,45 +58,54 @@ class Spritesheet {
     ctx.drawImage(buff, x * this.width, y * this.height)
   }
 
-  drawShards(ctx, buff, size, idxX, idxY, delta) {
-    const width = this.width / size
-    const height = this.height / size
+  drawAnimation(name, ctx, x, y, distance) {
+    const animation = this.animations.get(name)
+    this.drawTile(animation(distance), ctx, x, y)
+  }
+
+  extractCoin(name, ctx, idxX, idxY, delta) {
+    const tile = this.tileset.get(name)[1]
+    const coin = this.tileset.get(`coin`)[1]
+    const posX = idxX * this.width
+    const posY = idxY * this.height
+    delta *= 35
+
+    ctx.drawImage(tile, posX, Math.min(posY, posY + delta**2 - delta * 8))
+    if ((posY - this.height + delta**2 - delta * 20) < posY - this.height) {
+      ctx.drawImage(coin, posX, Math.min(posY - this.height, posY - this.height + delta**2 - delta * 20))
+    }
+  }
+
+  drawShards(name, ctx, size, idxX, idxY, delta) {
+    const buff = this.tileset.get(name)[1]
+    const shardW = this.width / size
+    const shardH = this.height / size
     const mult = 2.5
 
     for (let sc = 0; sc < size; sc += 1) {
       const isLeftHalf = sc < size / 2
       // TODO: Find multiplier for c to properly offset columns
-      const toX = (idxX + (isLeftHalf ? -delta : delta)) * this.width
+      const posX = (idxX + (isLeftHalf ? -delta : delta)) * this.width
 
       for (let sr = 0; sr < size; sr += 1) {
-        const toY = (idxY + (delta**2 - delta * (mult - 0.5 * sr))) * this.height
-        const sx = width * sc
-        const sy = height * sr
-        const dx = toX + width * sc
-        const dy = toY + height * sr
+        const posY = (idxY + (delta**2 - delta * (mult - 0.5 * sr))) * this.height
+        const sx = shardW * sc
+        const sy = shardH * sr
+        const dx = posX + shardW * sc
+        const dy = posY + shardH * sr
 
         // TODO: Find a way to rotate individual shards
         ctx.drawImage(
           buff,
           sx, sy,
           // sW, sH
-          width, height,
+          shardW, shardH,
           dx, dy,
           // dW, dH
-          width, height
+          shardW, shardH
         )
       }
     }
-  }
-
-  shredTile(name, ctx, idxX, idxY, delta) {
-    const buff = this.tileset.get(name)[1]
-    this.drawShards(ctx, buff, 2, idxX, idxY, delta)
-  }
-
-  drawAnimation(name, ctx, x, y, distance) {
-    const animation = this.animations.get(name)
-    this.drawTile(animation(distance), ctx, x, y)
   }
 }
 

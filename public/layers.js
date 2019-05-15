@@ -23,9 +23,27 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
           else {
             if (tile.destroyable && tile.remove) {
               const delta = lvl.totalTime - tile.touchedAt / 1000
-              delta < 2
-                ? sprites.shredTile(tile.name, ctx, x - startIdx, y, delta * 5)
-                : tiles.removeOne(x, y)
+              if (delta < 2) {
+                sprites.drawShards(tile.name, ctx, 2, x - startIdx, y, delta * 5)
+              }
+              else {
+                tiles.removeOne(x, y)
+              }
+            }
+            else if (tile.withCoin && tile.getCoin) {
+              const delta = lvl.totalTime - tile.touchedAt / 1000
+
+              if (delta < 2) {
+                sprites.extractCoin(tile.name, ctx, x - startIdx, y, delta)
+              }
+              else {
+                sprites.drawTile(tile.name, ctx, x - startIdx, y)
+                tiles.set(x, y, {
+                  ...tile,
+                  withCoin: false,
+                  getCoin: false,
+                })
+              }
             }
             else {
               sprites.drawTile(tile.name, ctx, x - startIdx, y)

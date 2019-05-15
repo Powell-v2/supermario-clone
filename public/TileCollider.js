@@ -81,12 +81,30 @@ class TileCollider {
           if (match.tile.destroyable) {
             const x = this.tiles.toIndex(match.xLeft)
             const y = this.tiles.toIndex(match.yTop)
+
             interactionGrid.set(x, y, {
               ...match.tile,
               remove: true,
               touchedAt: performance.now()
             })
-            this.tiles.matrix.replaceOne(x, y, { name: `sky` })
+            this.tiles.matrix.set(x, y, { name: `sky` })
+          }
+
+          if (match.tile.withCoin) {
+            const { name } = match.tile
+            const x = this.tiles.toIndex(match.xLeft)
+            const y = this.tiles.toIndex(match.yTop)
+
+            interactionGrid.set(x, y, {
+              ...match.tile,
+              name: `${name}_off`,
+              getCoin: true,
+              touchedAt: performance.now(),
+            })
+            this.tiles.matrix.set(x, y, {
+              ...match.tile,
+              withCoin: false,
+            })
           }
         }
       }

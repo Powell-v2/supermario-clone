@@ -51,8 +51,8 @@ function createGrid(tiles, patterns) {
   const matrix = new Matrix()
 
   for (const { x, y, tile } of expandTiles(tiles, patterns)) {
-    const { name, type, destroyable } = tile
-    matrix.set(x, y, { name, type, destroyable })
+    const { ranges, ...attrs } = tile
+    matrix.set(x, y, { ...attrs })
   }
 
   return matrix
