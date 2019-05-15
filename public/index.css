@@ -20,6 +20,9 @@ p {
 #top {
   height:80px;
 }
+#scene {
+  width: 100%;
+}
 #gameHolder {
   background-color:#dadada;
   height:385px;

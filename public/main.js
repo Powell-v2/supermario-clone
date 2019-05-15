@@ -12,10 +12,10 @@ import { createLevelLoader } from './loaders/level.js'
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
 const { offsetHeight, offsetWidth } = document.getElementById(`gameHolder`)
-// Extend scene and camera sizes by this value to
-// hide the process of drawing new tile columns.
-const drawingOffset = 70
-scene.width = offsetWidth + drawingOffset
+
+// Offset scene and cam by this value to hide undrawn column
+const drawingOffset = 35
+scene.width = offsetWidth - drawingOffset
 scene.height = offsetHeight
 
 const cam = new Camera()
@@ -24,7 +24,7 @@ cam.size.set(offsetWidth + drawingOffset, offsetHeight)
 window.addEventListener(`resize`, () => {
   const { offsetHeight, offsetWidth } = document.getElementById(`gameHolder`)
   cam.size.set(offsetWidth + drawingOffset, offsetHeight)
-  scene.width = offsetWidth + drawingOffset
+  scene.width = offsetWidth - drawingOffset
   scene.height = offsetHeight
 })
 
@@ -83,7 +83,7 @@ function setupHandlers(lvl, entityFactory, timer) {
 
       // Limit camera movement to 2260px - which is the rightmost edge of the level.
       // Behind the edge there is a wall of tiles which blocks the character.
-      cam.pos.x = Math.max(0, Math.min(hero.pos.x - 105, 2260))
+      cam.pos.x = Math.max(0, Math.min(hero.pos.x - 105, 1815))
 
       lvl.comp.draw(ctx, cam)
     }
