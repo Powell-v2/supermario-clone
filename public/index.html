@@ -5,7 +5,7 @@
   <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
   <script type="module" src="/public/main.js"></script>
-  <link rel="stylesheet" href="/public/index.css" />
+  <link rel="stylesheet" href="/public/styles/index.css" />
 </head>
 <body>
   <div id="pageContainer">
@@ -18,7 +18,13 @@
   		<p>Page Title</p>
   	</div>
   	<div id="gameHolder">
-			<div id="gameOverlay">Pick character to start playing</div>
+			<div id="gameOverlay">
+				<div class="plate">
+					<div class="plate__inner">
+						Pick your character to play
+					</div>
+				</div>
+			</div>
   		<canvas id="scene"></canvas>
   	</div>
   	<div id="content" class="headerInner">
