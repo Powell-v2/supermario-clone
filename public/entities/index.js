@@ -9,10 +9,10 @@ export default async function loadEntities() {
   const addAs = (name) => (factory) => factories[name] = factory
 
   await Promise.all([
-    loadHero(`indigoMan`).then(addAs(`indigoMan`)),
-    // loadHero(`luigi`).then(addAs(`luigi`)),
-    // loadGoomba().then(addAs(`goomba`)),
-    // loadKoopa().then(addAs(`koopa`)),
+    loadHero(`alan`).then(addAs(`alan`)),
+    loadHero(`adam`).then(addAs(`adam`)),
+    loadHero(`joe`).then(addAs(`joe`)),
+    loadHero(`rob`).then(addAs(`rob`)),
   ])
 
   return factories

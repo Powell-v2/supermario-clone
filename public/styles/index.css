@@ -116,12 +116,9 @@ p {
   line-height:150px;
   margin:10px;
   padding:10px;
-  color: whitesmoke;
+  color: black;
   font-size: 1.3rem;
   text-transform: uppercase;
-}
-#indigoMan.playerButton {
-  background-color: darkblue;
 }
 
 .hidden {

@@ -1,0 +1,40 @@
+{
+  "imageURL": "/public/assets/joe.png",
+  "frames": [
+    {
+      "name": "idle",
+      "rect": [0, 0, 25, 45]
+    },
+    {
+      "name": "run_1",
+      "rect": [25, 0, 25, 45]
+    },
+    {
+      "name": "run_2",
+      "rect": [50, 0, 25, 45]
+    },
+    {
+      "name": "run_3",
+      "rect": [75, 0, 25, 45]
+    },
+    {
+      "name": "skid",
+      "rect": [100, 0, 25, 45]
+    },
+    {
+      "name": "jump",
+      "rect": [125, 0, 25, 45]
+    }
+  ],
+  "animations": [
+    {
+      "name": "run",
+      "frameLen": 8,
+      "frames": [
+        "run_1",
+        "run_2",
+        "run_3"
+      ]
+    }
+  ]
+}
