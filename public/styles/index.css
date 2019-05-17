@@ -34,8 +34,9 @@ p {
   width: 100%;
 }
 #gameHolder {
-  background-color:#dadada;
+  position: relative;
   height:385px;
+  background-color:#dadada;
   text-align:center;
   overflow: hidden;
 }
@@ -89,6 +90,17 @@ p {
   line-height: 1.45;
   text-align: center;
 }
+.mute {
+  position: absolute;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  top: .5rem;
+  right: .5rem;
+}
+.mute:focus {
+  outline: none;
+}
 
 .headerInner {
   margin:0 auto;
@@ -110,6 +122,10 @@ p {
 }
 #indigoMan.playerButton {
   background-color: darkblue;
+}
+
+.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 699px) {

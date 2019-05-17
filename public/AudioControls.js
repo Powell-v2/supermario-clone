@@ -53,6 +53,10 @@ export default class AudioControls {
   }
 
   setupMuteButton(btn, evType) {
+    const muteOffIcon = document.querySelector(`.mute--off`)
+    const muteOnIcon = document.querySelector(`.mute--on`)
+    muteOffIcon.classList.toggle(`hidden`)
+
     btn.addEventListener(evType, () => {
       // check if context is in suspended state (autoplay policy)
       if (this.audioCtx.state === 'suspended') {
@@ -68,6 +72,9 @@ export default class AudioControls {
         this.unmute()
         btn.dataset.muted = 'no'
       }
+
+      muteOffIcon.classList.toggle(`hidden`)
+      muteOnIcon.classList.toggle(`hidden`)
     }, false)
   }
 }

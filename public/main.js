@@ -92,7 +92,7 @@ function setupHandlers(lvl, entityFactory, timer) {
     }
 
     const audioControls = new AudioControls()
-    // audioControls.play(`soundtrack`)
+    audioControls.play(`soundtrack`)
     audioControls.setupMuteButton(document.querySelector('.mute'), eventType)
 
     playerSelectors.forEach((button) => {

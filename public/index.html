@@ -26,15 +26,22 @@
 				</div>
 			</div>
   		<canvas id="scene"></canvas>
+			<button
+				data-muted="no"
+				class="mute"
+				role="switch"
+				aria-checked="false"
+			>
+				<img
+					class="mute--off hidden"
+					src="/public/assets/icons/mute.png"
+				/>
+				<img
+					class="mute--on hidden"
+					src="/public/assets/icons/mute-on.png"
+				/>
+			</button>
   	</div>
-		<button
-			data-muted="no"
-			class="mute"
-			role="switch"
-			aria-checked="false"
-		>
-			<span>Mute/Unmute</span>
-		</button>
   	<div id="content" class="headerInner">
   		<p>Choose character:</p>
   		<div class="playerButton" id="indigoMan" data-name="indigoMan">Indigo Man</div>
