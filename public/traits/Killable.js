@@ -1,3 +1,4 @@
+import AudioControls from '../AudioControls.js'
 import { Trait } from '../Entity.js'
 
 export default class Killable extends Trait {
@@ -7,10 +8,14 @@ export default class Killable extends Trait {
     this.dead = false
     this.deadTime = 0
     this.removeAfter = 1.5
+
+    this.audioControls = new AudioControls()
   }
 
   kill() {
     this.dead = true
+
+    this.audioControls.play(`die`)
   }
 
   revive() {
@@ -18,12 +23,12 @@ export default class Killable extends Trait {
     this.deadTime = 0
   }
 
-  update(ent, delta, lvl) {
+  update(entity, delta, lvl) {
     if (this.dead) {
       this.deadTime += delta
 
       if (this.deadTime >= this.removeAfter) {
-        lvl.entities.delete(ent)
+        lvl.entities.delete(entity)
       }
     }
   }

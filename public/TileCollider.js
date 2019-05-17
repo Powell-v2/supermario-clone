@@ -1,10 +1,13 @@
 `use strict`
+import AudioControls from './AudioControls.js'
 import TileResolver from './TileResolver.js'
 import { SIDES } from './Entity.js'
 
 class TileCollider {
   constructor(collisionMatrix) {
     this.tiles = new TileResolver(collisionMatrix)
+
+    this.audioControls = new AudioControls()
   }
 
   checkX(entity) {
@@ -79,6 +82,7 @@ class TileCollider {
           entity.obstruct(SIDES.TOP)
 
           if (match.tile.destroyable) {
+            this.audioControls.play(`break`)
             const x = this.tiles.toIndex(match.xLeft)
             const y = this.tiles.toIndex(match.yTop)
 
@@ -91,6 +95,8 @@ class TileCollider {
           }
 
           if (match.tile.withCoin) {
+            this.audioControls.play(`coin`)
+
             const { name } = match.tile
             const x = this.tiles.toIndex(match.xLeft)
             const y = this.tiles.toIndex(match.yTop)

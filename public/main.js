@@ -1,4 +1,5 @@
 `use strict`
+import AudioControls from './AudioControls.js'
 import Camera from './Camera.js'
 import Timer from './Timer.js'
 import Entity from './Entity.js'
@@ -8,6 +9,7 @@ import { isMobile } from './utils/browser.js'
 import loadEntities from './entities/index.js'
 import { setupKeyboard } from './input.js'
 import { createLevelLoader } from './loaders/level.js'
+import { loadJson } from './loaders.js'
 
 const scene = document.getElementById(`scene`)
 const ctx = scene.getContext(`2d`)
@@ -40,6 +42,7 @@ function createPlayerEnvironment(playerEnt) {
 }
 
 async function main(ctx) {
+  new AudioControls(await loadJson(`/public/assets/audio/config.json`))
   const entityFactory = await loadEntities()
   const lvl = await createLevelLoader(entityFactory)(`1-1`)
 
@@ -87,6 +90,10 @@ function setupHandlers(lvl, entityFactory, timer) {
 
       lvl.comp.draw(ctx, cam)
     }
+
+    const audioControls = new AudioControls()
+    // audioControls.play(`soundtrack`)
+    audioControls.setupMuteButton(document.querySelector('.mute'), eventType)
 
     playerSelectors.forEach((button) => {
       button.removeEventListener(eventType, handleSelect)

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "break",
+    "format": "mp3"
+  },
+  {
+    "name": "coin",
+    "format": "mp3"
+  },
+  {
+    "name": "die",
+    "format": "mp3"
+  },
+  {
+    "name": "jump",
+    "format": "mp3"
+  },
+  {
+    "name": "soundtrack",
+    "format": "mp3",
+    "loop": true
+  }
+]

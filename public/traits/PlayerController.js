@@ -9,16 +9,20 @@ export default class PlayerController extends Trait {
     this.checkpoint = new Vector2(0, 0)
   }
 
-  setPlayer(ent) {
-    this.player = ent
+  setPlayer(player) {
+    this.player = player
   }
 
-  update(_ent, _delta, lvl) {
+  update(_entity, _delta, lvl) {
     if (!lvl.entities.has(this.player)) {
       this.player.pos.set(this.checkpoint.x, this.checkpoint.y)
       this.player.killable.revive()
 
       lvl.entities.add(this.player)
+    }
+
+    if (this.player.pos.y >= 350 && this.player.killable) {
+      this.player.killable.kill()
     }
   }
 }
