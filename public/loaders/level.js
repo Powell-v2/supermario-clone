@@ -1,53 +1,21 @@
 `use strict`
 import Level from '../Level.js'
 
-import { createBackgroundLayer, createSpriteLayer } from '../layers.js'
 import { loadJson, loadSpritesheet } from '../loaders.js'
 import { Matrix } from '../math.js'
 
-function setupCollision({ layers, patterns }, lvl) {
-  const mergedTiles = layers.reduce((acc, layer) => {
-    return acc.concat(layer.tiles)
-  }, [])
+export async function createLevelLoader(entityFactory, name) {
+  const lvlSpec = await loadJson(`/public/levels/${name}.json`)
+  const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
 
-  lvl.setCollisionGrid(createGrid(mergedTiles, patterns))
+  const lvl = new Level(lvlSpec, bgSprites, entityFactory)
+
+  lvl.reset()
+
+  return lvl
 }
 
-function setupBackgrounds({ layers, patterns }, lvl, bgSprites) {
-  layers.forEach((layer, i) => {
-    const bgGrid = createGrid(layer.tiles, patterns)
-    lvl.comp.layers.push(createBackgroundLayer(lvl, bgGrid, bgSprites))
-    // TODO: Find better way to identify grid containing interactive tiles
-    if (i === 1) lvl.interactionGrid = bgGrid
-  })
-}
-
-function setupEntities(lvlSpec, lvl, entityFactory) {
-  lvlSpec.entities.forEach(({ name, position: [x, y] }) => {
-    const entity = entityFactory[name]()
-    entity.pos.set(x, y)
-    lvl.entities.add(entity)
-  })
-
-  lvl.comp.layers.push(createSpriteLayer(lvl.entities))
-}
-
-function createLevelLoader(entityFactory) {
-  return async function loadLevel(name) {
-    const lvlSpec = await loadJson(`/public/levels/${name}.json`)
-    const bgSprites = await loadSpritesheet(lvlSpec.spritesheet)
-
-    const lvl = new Level()
-
-    setupCollision(lvlSpec, lvl)
-    setupBackgrounds(lvlSpec, lvl, bgSprites)
-    setupEntities(lvlSpec, lvl, entityFactory)
-
-    return lvl
-  }
-}
-
-function createGrid(tiles, patterns) {
+export function createGrid(tiles, patterns) {
   const matrix = new Matrix()
 
   for (const { x, y, tile } of expandTiles(tiles, patterns)) {
@@ -112,8 +80,4 @@ function* expandTiles(tiles, patterns) {
   }
 
   yield* walkTiles(tiles, 0, 0)
-}
-
-export {
-  createLevelLoader,
 }

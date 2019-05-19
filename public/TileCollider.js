@@ -4,8 +4,8 @@ import TileResolver from './TileResolver.js'
 import { SIDES } from './Entity.js'
 
 class TileCollider {
-  constructor(collisionMatrix) {
-    this.tiles = new TileResolver(collisionMatrix)
+  constructor(collisionGrid) {
+    this.collisionGrid = new TileResolver(collisionGrid)
 
     this.audioControls = new AudioControls()
   }
@@ -17,7 +17,7 @@ class TileCollider {
     else if (entity.vel.x < 0) x = entity.bounds.left
     else return
 
-    const matches = this.tiles.searchByRange(
+    const matches = this.collisionGrid.searchByRange(
       x, x,
       entity.bounds.top,
       entity.bounds.bottom
@@ -55,7 +55,7 @@ class TileCollider {
     else if (entity.vel.y < 0) y = entity.bounds.top
     else return
 
-    const matches = this.tiles.searchByRange(
+    const matches = this.collisionGrid.searchByRange(
       entity.bounds.left, entity.bounds.right,
       y, y
     )
@@ -83,31 +83,33 @@ class TileCollider {
 
           if (match.tile.destroyable) {
             this.audioControls.play(`break`)
-            const x = this.tiles.toIndex(match.xLeft)
-            const y = this.tiles.toIndex(match.yTop)
+            const x = this.collisionGrid.toIndex(match.xLeft)
+            const y = this.collisionGrid.toIndex(match.yTop)
 
             interactionGrid.set(x, y, {
               ...match.tile,
-              remove: true,
               touchedAt: performance.now()
             })
-            this.tiles.matrix.set(x, y, { name: `sky` })
+            this.collisionGrid.matrix.set(x, y, {
+              ...match.tile,
+              // Unset type to prevent collision.
+              type: undefined,
+            })
           }
 
           if (match.tile.withCoin) {
             this.audioControls.play(`coin`)
 
             const { name } = match.tile
-            const x = this.tiles.toIndex(match.xLeft)
-            const y = this.tiles.toIndex(match.yTop)
+            const x = this.collisionGrid.toIndex(match.xLeft)
+            const y = this.collisionGrid.toIndex(match.yTop)
 
             interactionGrid.set(x, y, {
               ...match.tile,
               name: `${name}_off`,
-              getCoin: true,
               touchedAt: performance.now(),
             })
-            this.tiles.matrix.set(x, y, {
+            this.collisionGrid.matrix.set(x, y, {
               ...match.tile,
               withCoin: false,
             })

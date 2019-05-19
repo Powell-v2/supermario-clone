@@ -1,3 +1,4 @@
+`use strict`
 import { Trait } from '../Entity.js'
 import { Vector2 } from '../math.js'
 
@@ -23,6 +24,8 @@ export default class PlayerController extends Trait {
 
     if (this.player.pos.y >= 350 && this.player.killable) {
       this.player.killable.kill()
+
+      lvl.reset()
     }
   }
 }

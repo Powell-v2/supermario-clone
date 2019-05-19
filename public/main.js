@@ -44,7 +44,7 @@ function createPlayerEnvironment(playerEnt) {
 async function main(ctx) {
   new AudioControls(await loadJson(`/public/assets/audio/config.json`))
   const entityFactory = await loadEntities()
-  const lvl = await createLevelLoader(entityFactory)(`1-1`)
+  const lvl = await createLevelLoader(entityFactory, `1-1`)
 
   const timer = new Timer()
   timer.update = function(delta) {
@@ -84,9 +84,9 @@ function setupHandlers(lvl, entityFactory, timer) {
     timer.update = function(delta) {
       lvl.update(delta)
 
-      // Limit camera movement to 2260px - which is the rightmost edge of the level.
+      // Limit camera movement to 1815px - which is the rightmost edge of the level.
       // Behind the edge there is a wall of tiles which blocks the character.
-      cam.pos.x = Math.max(0, Math.min(hero.pos.x - 105, 1815))
+      cam.pos.x = Math.max(0, Math.min(hero.pos.x - 210, 1815))
 
       lvl.comp.draw(ctx, cam)
     }
