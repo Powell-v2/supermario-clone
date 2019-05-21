@@ -16,6 +16,10 @@
     "format": "mp3"
   },
   {
+    "name": "fireworks",
+    "format": "mp3"
+  },
+  {
     "name": "soundtrack",
     "format": "mp3",
     "loop": true
