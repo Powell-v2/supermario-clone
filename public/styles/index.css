@@ -120,7 +120,9 @@ canvas, #gameHolder, #gameOverlay {
 .mute:focus {
   outline: none;
 }
-
+[class^="mute--"] {
+  display: absolute;
+}
 .headerInner {
   margin:0 auto;
   text-align:center;

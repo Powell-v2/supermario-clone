@@ -133,8 +133,13 @@ class Level {
       this.comp.draw(this.ctx, this.camera)
     }
 
-    this.audioControls.play(`soundtrack`)
-    this.audioControls.setupMuteButton(document.querySelector('.mute'), ev.type)
+    if (this.audioControls.isMuted) {
+      this.audioControls.unmute()
+    }
+    else {
+      this.audioControls.play(`soundtrack`)
+      this.audioControls.setupMuteButton(document.querySelector('.mute'), ev.type)
+    }
   }
 
   end() {
@@ -148,7 +153,9 @@ class Level {
     overlay.style.visibility = `visible`
     overlay.style.animation = `fade_in 6s`
 
-    this.audioControls.mute()
+    if (!this.audioControls.isMuted) {
+      this.audioControls.mute()
+    }
 
     this.setupPlayerSelectors((ev) => {
       destroyFireworks()

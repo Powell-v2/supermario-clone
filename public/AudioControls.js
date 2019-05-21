@@ -1,4 +1,6 @@
 `use strict`
+const muteOffIcon = document.querySelector(`.mute--off`)
+const muteOnIcon = document.querySelector(`.mute--on`)
 
 export default class AudioControls {
   constructor(config) {
@@ -36,8 +38,15 @@ export default class AudioControls {
     this.audioElems[name].play()
   }
 
+  switchIcons() {
+    muteOnIcon.classList.toggle(`hidden`)
+    muteOffIcon.classList.toggle(`hidden`)
+  }
+
   mute() {
     this.isMuted = true
+
+    this.switchIcons()
 
     for (const el of Object.values(this.audioElems)) {
       if (el.loop) el.pause()
@@ -47,34 +56,29 @@ export default class AudioControls {
   unmute() {
     this.isMuted = false
 
+    this.switchIcons()
+
     for (const el of Object.values(this.audioElems)) {
       if (el.loop) el.play()
     }
   }
 
   setupMuteButton(btn, evType) {
-    const muteOffIcon = document.querySelector(`.mute--off`)
-    const muteOnIcon = document.querySelector(`.mute--on`)
-    muteOffIcon.classList.toggle(`hidden`)
+    // Initially both icons are hidden - show mute_off button on game start
+    if (
+      muteOffIcon.classList.contains(`hidden`) &&
+      muteOnIcon.classList.contains(`hidden`)
+    ) {
+      muteOffIcon.classList.remove(`hidden`)
+    }
 
     btn.addEventListener(evType, () => {
       // check if context is in suspended state (autoplay policy)
-      if (this.audioCtx.state === 'suspended') {
+      if (this.audioCtx.state === `suspended`) {
         this.audioCtx.resume()
       }
 
-      // mute/unmute track depending on state
-      if (btn.dataset.muted === 'no') {
-        this.mute()
-        btn.dataset.muted = 'yes'
-      }
-      else if (btn.dataset.muted === 'yes') {
-        this.unmute()
-        btn.dataset.muted = 'no'
-      }
-
-      muteOffIcon.classList.toggle(`hidden`)
-      muteOnIcon.classList.toggle(`hidden`)
+      this.isMuted ? this.unmute() : this.mute()
     }, false)
   }
 }
