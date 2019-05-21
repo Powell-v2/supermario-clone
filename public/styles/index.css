@@ -15,6 +15,9 @@ p {
   margin:0;
   padding:20px 0;
 }
+canvas, #gameHolder, #gameOverlay {
+  user-select: none;
+}
 
 #pageContainer {
   width: 100vw;
