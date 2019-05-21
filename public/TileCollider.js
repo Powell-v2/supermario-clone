@@ -1,16 +1,13 @@
 `use strict`
-import AudioControls from './AudioControls.js'
 import TileResolver from './TileResolver.js'
 import { SIDES } from './Entity.js'
 
 class TileCollider {
   constructor(collisionGrid) {
     this.collisionGrid = new TileResolver(collisionGrid)
-
-    this.audioControls = new AudioControls()
   }
 
-  checkX(entity) {
+  checkX(entity, lvl) {
     let x
 
     if (entity.vel.x > 0) x = entity.bounds.right
@@ -24,6 +21,15 @@ class TileCollider {
     )
 
     matches.forEach((match) => {
+      // End scene.
+      if (match.tile.type === `door` && entity.hasReachedEnd === false) {
+        entity.hasReachedEnd = true
+
+        entity.controls.removeListeners()
+        entity.run.direction = 0
+
+        lvl.end()
+      }
       // Skip non-blocking types.
       if (match.tile.type !== `ground`) return
 
@@ -48,7 +54,7 @@ class TileCollider {
     })
   }
 
-  checkY(entity, interactionGrid) {
+  checkY(entity, { audioControls, interactionGrid }) {
     let y
 
     if (entity.vel.y > 0) y = entity.bounds.bottom
@@ -82,7 +88,7 @@ class TileCollider {
           entity.obstruct(SIDES.TOP)
 
           if (match.tile.destroyable) {
-            this.audioControls.play(`break`)
+            audioControls.play(`break`)
             const x = this.collisionGrid.toIndex(match.xLeft)
             const y = this.collisionGrid.toIndex(match.yTop)
 
@@ -98,7 +104,7 @@ class TileCollider {
           }
 
           if (match.tile.withCoin) {
-            this.audioControls.play(`coin`)
+            audioControls.play(`coin`)
 
             const { name } = match.tile
             const x = this.collisionGrid.toIndex(match.xLeft)

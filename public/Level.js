@@ -3,8 +3,15 @@ import Compositor from './Compositor.js'
 import TileCollider from './TileCollider.js'
 import EntityCollider from './EntityCollider.js'
 
+import {
+  launch as launchFireworks,
+  destroy as destroyFireworks
+} from './effects/fireworks/index.js'
+import { setupKeyboard } from './input.js'
 import { createBackgroundLayer, createSpriteLayer } from './layers.js'
 import { createGrid } from './loaders/level.js'
+import { createPlayerEnvironment } from './main.js'
+import { isMobile } from './utils/browser.js'
 
 class Level {
   constructor(lvlSpec, bgSprites, entityFactory) {
@@ -19,7 +26,12 @@ class Level {
 
     this.lvlSpec = lvlSpec
     this.bgSprites = bgSprites
-    this.entityFactory = bgSprites
+    this.entityFactory = entityFactory
+
+    this.audioControls = null
+    this.timer = null
+    this.ctx = null
+    this.camera = null
 
     this.interactionGrid = null
   }
@@ -57,12 +69,87 @@ class Level {
     this.comp.layers.push(createSpriteLayer(this.entities))
   }
 
+  setupPlayerSelectors(handler) {
+    const playerSelectors = document.querySelectorAll(`.playerButton`)
+    const eventType = (isMobile() && ('ontouchstart' in window)) ? `touchstart` : `click`
+
+    const handleSelect = (ev) => {
+      handler(ev)
+
+      playerSelectors.forEach((button) => {
+        button.removeEventListener(eventType, handleSelect)
+      })
+    }
+
+    playerSelectors.forEach((button) => {
+      button.addEventListener(eventType, handleSelect)
+    })
+  }
+
   reset() {
     this.comp.destroy()
 
     this.setupCollision()
     this.setupBackgrounds()
     this.setupEntities()
+  }
+
+  init(ev) {
+    const overlay = document.getElementById(`gameOverlay`)
+
+    overlay.style.visibility = `hidden`
+    overlay.style.animation = null
+
+    const { name } = ev.target.dataset
+    const hero = this.entityFactory[name]()
+    const playerEnv = createPlayerEnvironment(hero)
+
+    hero.controls = setupKeyboard(hero)
+
+    this.entities.clear()
+    this.entities.add(playerEnv)
+
+    if (isMobile()) {
+      const scene = document.getElementById(`scene`)
+      hero.run.direction = 1
+      hero.controls.listenTo(scene)
+    }
+    else {
+      hero.controls.listenTo(window)
+    }
+
+    this.timer.update = (delta) => {
+      this.update(delta)
+
+      // Limit camera movement to 1815px - which is the rightmost edge of the level.
+      // Behind the edge there is a wall of tiles which blocks the character.
+      this.camera.pos.x = Math.max(0, Math.min(hero.pos.x - 210, 1815))
+
+      this.comp.draw(this.ctx, this.camera)
+    }
+
+    this.audioControls.play(`soundtrack`)
+    this.audioControls.setupMuteButton(document.querySelector('.mute'), ev.type)
+  }
+
+  end() {
+    const fireworksCanvas = launchFireworks()
+    fireworksCanvas.style.animation = `fade_in 6s`
+
+    const overlayMsg = document.querySelector(`.plate__inner`)
+    overlayMsg.innerText = `Well done!`
+
+    const overlay = document.getElementById(`gameOverlay`)
+    overlay.style.visibility = `visible`
+    overlay.style.animation = `fade_in 6s`
+
+    this.audioControls.mute()
+
+    this.setupPlayerSelectors((ev) => {
+      destroyFireworks()
+      this.reset()
+      this.init(ev)
+    })
   }
 
   update(delta) {
@@ -72,10 +159,10 @@ class Level {
       ent.update(delta, this)
 
       ent.pos.x += ent.vel.x * delta
-      this.tileCollider.checkX(ent)
+      this.tileCollider.checkX(ent, this)
 
       ent.pos.y += ent.vel.y * delta
-      this.tileCollider.checkY(ent, this.interactionGrid)
+      this.tileCollider.checkY(ent, this)
 
       ent.vel.y += this.gravity * delta
     })

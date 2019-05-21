@@ -46,6 +46,7 @@ function createHeroFactory(sprite) {
     hero.addTrait(new Killable())
     hero.size.set(25, 45)
     hero.killable.removeAfter = 0
+    hero.hasReachedEnd = false
 
     hero.draw = drawHero
     hero.turbo = setTurboState

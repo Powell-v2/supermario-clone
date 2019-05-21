@@ -360,6 +360,7 @@
         },
         {
           "name": "skyscraper_8_3",
+          "type": "door",
           "ranges": [[2, 7]]
         },
         {

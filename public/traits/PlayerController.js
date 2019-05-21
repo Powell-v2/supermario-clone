@@ -1,5 +1,6 @@
 `use strict`
 import { Trait } from '../Entity.js'
+
 import { Vector2 } from '../math.js'
 
 export default class PlayerController extends Trait {
@@ -26,6 +27,10 @@ export default class PlayerController extends Trait {
       this.player.killable.kill()
 
       lvl.reset()
+    }
+
+    if (this.player.hasReachedEnd) {
+      this.player.jump.start()
     }
   }
 }

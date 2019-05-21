@@ -31,6 +31,8 @@ class Timer {
   start() {
     this.enqueue()
   }
+
+  update() {}
 }
 
 export default Timer
