@@ -5,10 +5,15 @@ import { isMobile } from './utils/browser.js'
 const PRESSED = 1
 const RELEASED = 0
 
-class Keyboard {
+export default class Keyboard {
   constructor() {
     this.states = new Map()
     this.actions = new Map()
+
+    this.target = null
+    this.registeredHandler = null
+
+    this.events = []
   }
 
   mapAction(code, cb) {
@@ -37,26 +42,33 @@ class Keyboard {
     this.actions.get(code)(state)
   }
 
-  listenTo(target) {
+  determineEventTypes() {
     if (isMobile() && ('ontouchstart' in window)) {
-      const mobileEvents = [`touchstart`, `touchend`]
-      mobileEvents.forEach((type) => {
-        target.addEventListener(type, (ev) => this.handleEvent(ev))
-      })
+      this.events = [`touchstart`, `touchend`]
     }
+    // Edge case: Safari doesn't recognize ontouch* event types
     else if (isMobile() && !('ontouchstart' in window)) {
-      const safariMobileEvents = [`mousedown`, `mouseup`]
-      safariMobileEvents.forEach((type) => {
-        target.addEventListener(type, (ev) => this.handleEvent(ev))
-      })
+      this.events = [`mousedown`, `mouseup`]
     }
     else {
-      const keyboardEvents = [`keydown`, `keyup`]
-      keyboardEvents.forEach((type) => {
-        target.addEventListener(type, (ev) => this.handleEvent(ev))
-      })
+      this.events = [`keydown`, `keyup`]
     }
   }
-}
 
-export default Keyboard
+  listenTo(target) {
+    this.target = target
+    this.registeredHandler = (ev) => this.handleEvent(ev)
+
+    this.determineEventTypes()
+    this.events.forEach((type) => {
+      target.addEventListener(type, this.registeredHandler)
+    })
+  }
+
+  removeListeners() {
+    this.determineEventTypes()
+    this.events.forEach((type) => {
+      this.target.removeEventListener(type, this.registeredHandler)
+    })
+  }
+}
