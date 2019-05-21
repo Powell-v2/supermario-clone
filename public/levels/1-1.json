@@ -312,6 +312,7 @@
         },
         {
           "name": "skyscraper_5_3",
+          "type": "door",
           "ranges": [[2, 4]]
         },
         {
@@ -328,6 +329,7 @@
         },
         {
           "name": "skyscraper_6_3",
+          "type": "door",
           "ranges": [[2, 5]]
         },
         {
@@ -344,6 +346,7 @@
         },
         {
           "name": "skyscraper_7_3",
+          "type": "door",
           "ranges": [[2, 6]]
         },
         {
