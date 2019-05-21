@@ -1,11 +1,13 @@
 `use strict`
 import Firework from './Firework.js'
+import AudioControls from '../../AudioControls.js'
 
 const container = document.getElementById(`gameHolder`)
 
 let canvas
 let ctx
 let intervalId
+let audioControls
 
 let fireworks = []
 let particles = []
@@ -25,9 +27,13 @@ export function destroy() {
 
 export function launch() {
   const { offsetWidth, offsetHeight } = container
+
+  audioControls = new AudioControls()
+
   canvas = document.createElement(`canvas`)
   canvas.setAttribute(`id`, `fireworks`)
   container.appendChild(canvas)
+
   ctx = canvas.getContext(`2d`)
 
   setSize()
@@ -66,7 +72,7 @@ function handleResize() {
   ctx.fillRect(0, 0, offsetWidth, offsetHeight)
 }
 
-export function loop() {
+function loop() {
   const { offsetWidth, offsetHeight } = container
   ctx.globalAlpha = 0.1
   ctx.fillStyle = fillColor
@@ -81,6 +87,7 @@ export function loop() {
     fireworks[i].draw(ctx)
 
     if (fireworks[i].isBlown) {
+      audioControls.play(`fireworks`)
       fireworks.splice(i, 1)
     }
   }
