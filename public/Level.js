@@ -118,12 +118,17 @@ class Level {
       hero.controls.listenTo(window)
     }
 
+    const rightmostLevelEdge = this.interactionGrid.grid.length * 35 - window.innerWidth
+
     this.timer.update = (delta) => {
       this.update(delta)
 
-      // Limit camera movement to 1815px - which is the rightmost edge of the level.
+      // Limit camera movement to max max level width minus screen width.
       // Behind the edge there is a wall of tiles which blocks the character.
-      this.camera.pos.x = Math.max(0, Math.min(hero.pos.x - 210, 1815))
+      this.camera.pos.x = Math.max(
+        0,
+        Math.min(hero.pos.x - 105, rightmostLevelEdge)
+      )
 
       this.comp.draw(this.ctx, this.camera)
     }
