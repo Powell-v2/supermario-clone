@@ -11,36 +11,39 @@ export default class AudioControls {
 
     this.isMuted = false
 
-    this.audioCtx = new (
-      window.AudioContext_BACKUP ||
-      window.AudioContext ||
-      window.webkitAudioContext
-    )
+    this.sounds = new Map()
+    this.loopedSounds = new Map()
+    config.forEach((sound) => this.sounds.set(sound.name, sound))
+  }
 
-    this.audioElems = {}
-    config.map(({ name, format, loop }) => {
-      const audioEl = new window.Audio(`/public/assets/audio/${name}.${format}`)
+  play(trackName) {
+    const { name, format, loop, isMuted } = this.sounds.get(trackName)
 
-      if (loop) audioEl.loop = true
-      if (format === `mp3`) audioEl.setAttribute(`type`, `audio/mpeg`)
+    if (isMuted) return
 
-      this.audioCtx
-        .createMediaElementSource(audioEl)
-        .connect(this.audioCtx.destination)
+    const audio = new Audio(`/public/assets/audio/${name}.${format}`)
 
-      this.audioElems[name] = audioEl
+    audio.type = `audio/mpeg`
+
+    if (loop) {
+      audio.loop = true
+
+      this.loopedSounds.set(name, audio)
+    }
+
+    audio.play()
+  }
+
+  muteOne(name) {
+    const sound = this.sounds.get(name)
+
+    if (sound.loop) {
+      this.loopedSounds.get(name).pause()
+    }
+    this.sounds.set(name, {
+      ...sound,
+      isMuted: true,
     })
-  }
-
-  play(name) {
-    if (this.isMuted) return
-
-    this.audioElems[name].play()
-  }
-
-  switchIcons() {
-    muteOnIcon.classList.toggle(`hidden`)
-    muteOffIcon.classList.toggle(`hidden`)
   }
 
   mute() {
@@ -48,9 +51,16 @@ export default class AudioControls {
 
     this.switchIcons()
 
-    for (const el of Object.values(this.audioElems)) {
-      if (el.loop) el.pause()
-    }
+    this.loopedSounds.forEach((sound) => {
+      sound.pause()
+    })
+
+    this.sounds.forEach((sound) => {
+      this.sounds.set(sound.name, {
+        ...sound,
+        isMuted: true,
+      })
+    })
   }
 
   unmute() {
@@ -58,9 +68,21 @@ export default class AudioControls {
 
     this.switchIcons()
 
-    for (const el of Object.values(this.audioElems)) {
-      if (el.loop) el.play()
-    }
+    this.loopedSounds.forEach((sound) => {
+      sound.play()
+    })
+
+    this.sounds.forEach((sound) => {
+      this.sounds.set(sound.name, {
+        ...sound,
+        isMuted: false,
+      })
+    })
+  }
+
+  switchIcons() {
+    muteOnIcon.classList.toggle(`hidden`)
+    muteOffIcon.classList.toggle(`hidden`)
   }
 
   setupMuteButton(btn, evType) {
@@ -73,12 +95,7 @@ export default class AudioControls {
     }
 
     btn.addEventListener(evType, () => {
-      // check if context is in suspended state (autoplay policy)
-      if (this.audioCtx.state === `suspended`) {
-        this.audioCtx.resume()
-      }
-
       this.isMuted ? this.unmute() : this.mute()
-    }, false)
+    })
   }
 }

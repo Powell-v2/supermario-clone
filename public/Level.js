@@ -154,7 +154,8 @@ class Level {
     overlay.style.animation = `fade_in 6s`
 
     if (!this.audioControls.isMuted) {
-      this.audioControls.mute()
+      this.audioControls.muteOne(`jump`)
+      this.audioControls.muteOne(`soundtrack`)
     }
 
     this.setupPlayerSelectors((ev) => {
