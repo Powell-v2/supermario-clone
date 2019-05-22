@@ -88,43 +88,42 @@ class TileCollider {
           entity.obstruct(SIDES.TOP)
 
           if (match.tile.destroyable) {
-            const { audioControls, interactionGrid } = lvl
-            const x = this.collisionGrid.toIndex(match.xLeft)
-            const y = this.collisionGrid.toIndex(match.yTop)
-
-            audioControls.play(`break`)
-
-            interactionGrid.set(x, y, {
-              ...match.tile,
-              touchedAt: lvl.totalTime
-            })
-            this.collisionGrid.matrix.set(x, y, {
-              ...match.tile,
-              // Unset type to prevent collision.
-              type: undefined,
-            })
+            this.interact(
+              match,
+              null,
+              { type: undefined },
+              lvl
+            )
           }
 
           if (match.tile.withCoin) {
-            const { audioControls, interactionGrid } = lvl
-            const { name } = match.tile
-            const x = this.collisionGrid.toIndex(match.xLeft)
-            const y = this.collisionGrid.toIndex(match.yTop)
-
-            audioControls.play(`coin`)
-
-            interactionGrid.set(x, y, {
-              ...match.tile,
-              name: `${name}_off`,
-              touchedAt: lvl.totalTime,
-            })
-            this.collisionGrid.matrix.set(x, y, {
-              ...match.tile,
-              withCoin: false,
-            })
+            this.interact(
+              match,
+              { name: `${match.tile.name}_off` },
+              { withCoin: false },
+              lvl
+            )
           }
         }
       }
+    })
+  }
+
+  interact(match, interactionTileProps = {}, collisionTileProps = {}, lvl) {
+    const { audioControls, interactionGrid, totalTime } = lvl
+    const x = this.collisionGrid.toIndex(match.xLeft)
+    const y = this.collisionGrid.toIndex(match.yTop)
+
+    audioControls.play(match.tile.sound)
+
+    interactionGrid.set(x, y, {
+      ...match.tile,
+      touchedAt: totalTime,
+      ...interactionTileProps,
+    })
+    this.collisionGrid.matrix.set(x, y, {
+      ...match.tile,
+      ...collisionTileProps,
     })
   }
 }
