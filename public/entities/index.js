@@ -10,7 +10,7 @@ export default async function loadEntities() {
 
   await Promise.all([
     loadHero(`alan`).then(addAs(`alan`)),
-    loadHero(`adam`).then(addAs(`adam`)),
+    loadHero(`adamek`).then(addAs(`adamek`)),
     loadHero(`joe`).then(addAs(`joe`)),
     loadHero(`rob`).then(addAs(`rob`)),
   ])
