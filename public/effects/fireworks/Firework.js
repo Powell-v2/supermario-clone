@@ -15,7 +15,7 @@ export default class Firework {
   update(particles) {
     this.y -= this.speed
 
-    if (this.y < 400 - Math.sqrt(Math.random() * 400) * 40) {
+    if (this.y < 300 - Math.sqrt(Math.random() * 400) * 40) {
       this.isBlown = true
 
       for (let i = 0; i < 100; i += 1) {
