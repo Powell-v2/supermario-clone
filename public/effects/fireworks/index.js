@@ -3,6 +3,7 @@ import Firework from './Firework.js'
 import AudioControls from '../../AudioControls.js'
 
 const container = document.getElementById(`gameHolder`)
+export const id = `fireworks`
 
 let canvas
 let ctx
@@ -31,7 +32,7 @@ export function launch() {
   audioControls = new AudioControls()
 
   canvas = document.createElement(`canvas`)
-  canvas.setAttribute(`id`, `fireworks`)
+  canvas.setAttribute(`id`, id)
   container.appendChild(canvas)
 
   ctx = canvas.getContext(`2d`)

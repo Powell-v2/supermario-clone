@@ -5,7 +5,8 @@ import EntityCollider from './EntityCollider.js'
 
 import {
   launch as launchFireworks,
-  destroy as destroyFireworks
+  destroy as destroyFireworks,
+  id as fireworksId,
 } from './effects/fireworks/index.js'
 import { setupKeyboard } from './input.js'
 import { createBackgroundLayer, createSpriteLayer } from './layers.js'
@@ -144,17 +145,26 @@ class Level {
       this.audioControls.unmuteOne(`fireworks`)
     }
 
-    setupPlayerSelectors((ev) => {
-      this.reset()
-      this.init(ev)
-    })
+    let timeoutId1
+    let timeoutId2
 
-    setTimeout(() => {
+    timeoutId1 = setTimeout(() => {
       fireworksCanvas.style.animation = `fade_out 2s`
-      setTimeout(() => destroyFireworks(), 2000)
+      timeoutId2 = setTimeout(() => destroyFireworks(), 2000)
 
       overlayMsg.innerText = `Play again?`
     }, 5000)
+
+    setupPlayerSelectors((ev) => {
+      clearTimeout(timeoutId1)
+      clearTimeout(timeoutId2)
+
+      if (document.getElementById(fireworksId)) {
+        destroyFireworks()
+      }
+      this.reset()
+      this.init(ev)
+    })
   }
 
   update(delta) {
