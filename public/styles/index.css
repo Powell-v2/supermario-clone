@@ -15,8 +15,11 @@ p {
   margin:0;
   padding:20px 0;
 }
-canvas, #gameHolder, #gameOverlay {
+canvas, #gameHolder, #gameOverlay, .plate__inner {
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 #pageContainer {
