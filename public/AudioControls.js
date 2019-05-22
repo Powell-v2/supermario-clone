@@ -24,6 +24,7 @@ export default class AudioControls {
     const audio = new Audio(`/public/assets/audio/${name}.${format}`)
 
     audio.type = `audio/mpeg`
+    audio.autoplay = false
 
     if (loop) {
       audio.loop = true
@@ -34,15 +35,15 @@ export default class AudioControls {
     audio.play()
   }
 
-  muteOne(name) {
+  unmuteOne(name) {
     const sound = this.sounds.get(name)
 
     if (sound.loop) {
-      this.loopedSounds.get(name).pause()
+      this.loopedSounds.get(name).play()
     }
     this.sounds.set(name, {
       ...sound,
-      isMuted: true,
+      isMuted: false,
     })
   }
 
