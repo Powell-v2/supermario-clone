@@ -10,7 +10,7 @@ import {
 import { setupKeyboard } from './input.js'
 import { createBackgroundLayer, createSpriteLayer } from './layers.js'
 import { createGrid } from './loaders/level.js'
-import { createPlayerEnvironment } from './main.js'
+import { createPlayerEnvironment, setupPlayerSelectors } from './main.js'
 import { isMobile } from './utils/browser.js'
 
 class Level {
@@ -67,23 +67,6 @@ class Level {
     })
 
     this.comp.layers.push(createSpriteLayer(this.entities))
-  }
-
-  setupPlayerSelectors(handler) {
-    const playerSelectors = document.querySelectorAll(`.playerButton`)
-    const eventType = (isMobile() && ('ontouchstart' in window)) ? `touchstart` : `click`
-
-    const handleSelect = (ev) => {
-      handler(ev)
-
-      playerSelectors.forEach((button) => {
-        button.removeEventListener(eventType, handleSelect)
-      })
-    }
-
-    playerSelectors.forEach((button) => {
-      button.addEventListener(eventType, handleSelect)
-    })
   }
 
   reset() {

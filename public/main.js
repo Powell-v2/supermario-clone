@@ -8,15 +8,13 @@ import PlayerController from './traits/PlayerController.js'
 import loadEntities from './entities/index.js'
 import { createLevelLoader } from './loaders/level.js'
 import { loadJson } from './loaders.js'
+import { isMobile } from './utils/browser.js'
 
 const scene = document.getElementById(`scene`)
 const container = document.getElementById(`gameHolder`)
-
 const { devicePixelRatio } = window
-
 const ctx = scene.getContext(`2d`)
 const drawingOffset = 35
-
 const camera = new Camera()
 
 function setSize() {
@@ -26,7 +24,6 @@ function setSize() {
   // Offset scene and cam by this value to hide undrawn column`
   scene.style.width = `${offsetWidth}px`
   scene.style.height = `${offsetHeight}px`
-
   scene.width = (offsetWidth - drawingOffset) * devicePixelRatio
   scene.height = offsetHeight * devicePixelRatio
 
@@ -47,6 +44,23 @@ export function createPlayerEnvironment(playerEnt) {
   return playerEnv
 }
 
+export function setupPlayerSelectors(handler) {
+  const playerSelectors = document.querySelectorAll(`.playerButton`)
+  const eventType = (isMobile() && ('ontouchstart' in window)) ? `touchstart` : `click`
+
+  const handleSelect = (ev) => {
+    handler(ev)
+
+    playerSelectors.forEach((button) => {
+      button.removeEventListener(eventType, handleSelect)
+    })
+  }
+
+  playerSelectors.forEach((button) => {
+    button.addEventListener(eventType, handleSelect)
+  })
+}
+
 async function main(ctx) {
   const audioControls = new AudioControls(await loadJson(`/public/assets/audio/config.json`))
   const entityFactory = await loadEntities()
@@ -64,7 +78,7 @@ async function main(ctx) {
   }
   lvl.timer.start(0)
 
-  lvl.setupPlayerSelectors(lvl.init.bind(lvl))
+  setupPlayerSelectors(lvl.init.bind(lvl))
 }
 
 main(ctx)
