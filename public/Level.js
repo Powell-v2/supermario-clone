@@ -127,14 +127,14 @@ class Level {
 
   end() {
     const fireworksCanvas = launchFireworks()
-    fireworksCanvas.style.animation = `fade_in 6s`
+    fireworksCanvas.style.animation = `fade_in 2s`
 
     const overlayMsg = document.querySelector(`.plate__inner`)
     overlayMsg.innerText = `Well done!`
 
     const overlay = document.getElementById(`gameOverlay`)
     overlay.style.visibility = `visible`
-    overlay.style.animation = `fade_in 6s`
+    overlay.style.animation = `fade_in 2s`
 
     if (!this.audioControls.isMuted) {
       this.audioControls.mute()
@@ -142,10 +142,16 @@ class Level {
     this.audioControls.unmuteOne(`fireworks`)
 
     setupPlayerSelectors((ev) => {
-      destroyFireworks()
       this.reset()
       this.init(ev)
     })
+
+    setTimeout(() => {
+      fireworksCanvas.style.animation = `fade_out 2s`
+      setTimeout(() => destroyFireworks(), 2000)
+
+      overlayMsg.innerText = `Play again?`
+    }, 5000)
   }
 
   update(delta) {

@@ -56,6 +56,14 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
     opacity: 1;
   }
 }
+@keyframes fade_out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 #gameHolder {
   position: relative;
   height:385px;
