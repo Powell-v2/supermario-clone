@@ -9,7 +9,7 @@
 body {
   margin: 0;
   padding: 0;
-  width: 100%;
+  overflow-x: hidden;
 }
 p {
   margin:0;
@@ -24,6 +24,7 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
 
 #pageContainer {
   width: 100vw;
+  overflow-x: hidden;
 }
 #pageContainer p {
   /* line-height:100%; */
@@ -58,13 +59,14 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
 #gameHolder {
   position: relative;
   height:385px;
+  width: 100vw;
   background-color:#dadada;
   overflow: hidden;
 }
 #gameOverlay {
   position: absolute;
   height: inherit;
-  width: 100vw;
+  width: inherit;
   display: grid;
   place-items: center;
   background-color: rgba(0,0,0,.25);
