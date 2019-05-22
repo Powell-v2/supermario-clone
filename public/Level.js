@@ -116,12 +116,14 @@ class Level {
       this.comp.draw(this.ctx, this.camera)
     }
 
-    if (this.audioControls.isMuted) {
-      this.audioControls.unmute()
-    }
-    else {
+    if (!this.audioControls.isMuted) {
+      // Initial setup.
       this.audioControls.play(`soundtrack`)
-      this.audioControls.setupMuteButton(document.querySelector('.mute'), ev.type)
+      this.audioControls.setupMuteButton(document.querySelector(`.mute`), ev.type)
+
+      // On game reset.
+      this.audioControls.unmuteOne(`jump`)
+      this.audioControls.unmuteOne(`soundtrack`)
     }
   }
 
@@ -137,9 +139,10 @@ class Level {
     overlay.style.animation = `fade_in 2s`
 
     if (!this.audioControls.isMuted) {
-      this.audioControls.mute()
+      this.audioControls.muteOne(`jump`)
+      this.audioControls.muteOne(`soundtrack`)
+      this.audioControls.unmuteOne(`fireworks`)
     }
-    this.audioControls.unmuteOne(`fireworks`)
 
     setupPlayerSelectors((ev) => {
       this.reset()

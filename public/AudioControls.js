@@ -10,6 +10,7 @@ export default class AudioControls {
     this.constructor.instance = this;
 
     this.isMuted = false
+    this.isMuteButtonSetup = false
 
     this.sounds = new Map()
     this.loopedSounds = new Map()
@@ -35,6 +36,18 @@ export default class AudioControls {
     audio.play()
   }
 
+  muteOne(name) {
+    const sound = this.sounds.get(name)
+
+    if (sound.loop) {
+      this.loopedSounds.get(name).pause()
+    }
+    this.sounds.set(name, {
+      ...sound,
+      isMuted: true,
+    })
+  }
+
   unmuteOne(name) {
     const sound = this.sounds.get(name)
 
@@ -50,8 +63,6 @@ export default class AudioControls {
   mute() {
     this.isMuted = true
 
-    this.switchIcons()
-
     this.loopedSounds.forEach((sound) => {
       sound.pause()
     })
@@ -66,8 +77,6 @@ export default class AudioControls {
 
   unmute() {
     this.isMuted = false
-
-    this.switchIcons()
 
     this.loopedSounds.forEach((sound) => {
       sound.play()
@@ -87,6 +96,8 @@ export default class AudioControls {
   }
 
   setupMuteButton(btn, evType) {
+    if (this.isMuteButtonSetup) return
+
     // Initially both icons are hidden - show mute_off button on game start
     if (
       muteOffIcon.classList.contains(`hidden`) &&
@@ -97,6 +108,9 @@ export default class AudioControls {
 
     btn.addEventListener(evType, () => {
       this.isMuted ? this.unmute() : this.mute()
+      this.switchIcons()
     })
+
+    this.isMuteButtonSetup = true
   }
 }
