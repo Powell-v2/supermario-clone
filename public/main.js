@@ -40,7 +40,7 @@ export function createPlayerEnvironment(playerEnt) {
   const playerEnv = new Entity()
   const playerCtrl = new PlayerController()
 
-  playerCtrl.checkpoint.set(105, 105)
+  playerCtrl.checkpoint.set(10, 100)
   playerCtrl.setPlayer(playerEnt)
   playerEnv.addTrait(playerCtrl)
 
