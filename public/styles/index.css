@@ -111,6 +111,7 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   text-transform: uppercase;
   line-height: 1.45;
   text-align: center;
+  cursor: default;
 }
 .mute {
   position: absolute;
