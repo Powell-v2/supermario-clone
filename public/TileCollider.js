@@ -54,7 +54,7 @@ class TileCollider {
     })
   }
 
-  checkY(entity, { audioControls, interactionGrid }) {
+  checkY(entity, lvl) {
     let y
 
     if (entity.vel.y > 0) y = entity.bounds.bottom
@@ -88,13 +88,15 @@ class TileCollider {
           entity.obstruct(SIDES.TOP)
 
           if (match.tile.destroyable) {
-            audioControls.play(`break`)
+            const { audioControls, interactionGrid } = lvl
             const x = this.collisionGrid.toIndex(match.xLeft)
             const y = this.collisionGrid.toIndex(match.yTop)
 
+            audioControls.play(`break`)
+
             interactionGrid.set(x, y, {
               ...match.tile,
-              touchedAt: performance.now()
+              touchedAt: lvl.totalTime
             })
             this.collisionGrid.matrix.set(x, y, {
               ...match.tile,
@@ -104,16 +106,17 @@ class TileCollider {
           }
 
           if (match.tile.withCoin) {
-            audioControls.play(`coin`)
-
+            const { audioControls, interactionGrid } = lvl
             const { name } = match.tile
             const x = this.collisionGrid.toIndex(match.xLeft)
             const y = this.collisionGrid.toIndex(match.yTop)
 
+            audioControls.play(`coin`)
+
             interactionGrid.set(x, y, {
               ...match.tile,
               name: `${name}_off`,
-              touchedAt: performance.now(),
+              touchedAt: lvl.totalTime,
             })
             this.collisionGrid.matrix.set(x, y, {
               ...match.tile,
