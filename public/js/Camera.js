@@ -1,5 +1,5 @@
 `use strict`
-import { Vector2 } from './math.js'
+import { Vector2 } from './utils/math.js'
 
 class Camera {
   constructor() {

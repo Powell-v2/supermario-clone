@@ -1,8 +1,8 @@
 `use strict`
 import Level from '../Level.js'
 
-import { loadJson, loadSpritesheet } from '../loaders.js'
-import { Matrix } from '../math.js'
+import { loadJson, loadSpritesheet } from './helpers.js'
+import { Matrix } from '../utils/math.js'
 
 export async function createLevelLoader(entityFactory, name) {
   const lvlSpec = await loadJson(`/public/levels/${name}.json`)

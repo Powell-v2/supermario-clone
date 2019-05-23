@@ -7,7 +7,7 @@ import PlayerController from './traits/PlayerController.js'
 
 import loadEntities from './entities/index.js'
 import { createLevelLoader } from './loaders/level.js'
-import { loadJson } from './loaders.js'
+import { loadJson } from './loaders/helpers.js'
 import { isMobile } from './utils/browser.js'
 
 const scene = document.getElementById(`scene`)

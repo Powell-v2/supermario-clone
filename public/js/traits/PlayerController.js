@@ -1,7 +1,7 @@
 `use strict`
 import { Trait } from '../Entity.js'
 
-import { Vector2 } from '../math.js'
+import { Vector2 } from '../utils/math.js'
 
 export default class PlayerController extends Trait {
   constructor() {

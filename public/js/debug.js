@@ -1,4 +1,6 @@
-const setupMouseControl = (scene, ent, cam) => {
+`use strict`
+
+export const setupMouseControl = (scene, ent, cam) => {
   const events = [`mousedown`, `mousemove`]
   let lastEvent
 
@@ -27,8 +29,4 @@ const setupMouseControl = (scene, ent, cam) => {
   })
 
   scene.addEventListener(`contextmenu`, (ev) => ev.preventDefault())
-}
-
-export {
-  setupMouseControl,
 }

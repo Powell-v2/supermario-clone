@@ -1,5 +1,5 @@
 `use strict`
-import { randomVector } from '../utils.js'
+import { randomVector } from '../helpers.js'
 
 export default class Particle {
   constructor(x, y, color) {

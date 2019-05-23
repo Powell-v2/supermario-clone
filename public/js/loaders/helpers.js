@@ -1,7 +1,7 @@
 `use strict`
-import Spritesheet from './Spritesheet.js'
+import Spritesheet from '../Spritesheet.js'
 
-import { createAnimation } from './animation.js'
+import { createAnimation } from '../utils/animation.js'
 
 function loadJson(url) {
   return fetch(url).then((r) => r.json())

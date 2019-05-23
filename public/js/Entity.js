@@ -1,7 +1,7 @@
 `use strict`
 import BoundingBox from './BoundingBox.js'
 
-import { Vector2 } from './math.js'
+import { Vector2 } from './utils/math.js'
 
 const SIDES = {
   TOP: Symbol(`top`),

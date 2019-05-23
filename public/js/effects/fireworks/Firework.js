@@ -1,7 +1,7 @@
 `use strict`
 import Particle from './Particle.js'
 
-import { randomColor } from '../utils.js'
+import { randomColor } from '../helpers.js'
 
 export default class Firework {
   constructor(x, y) {

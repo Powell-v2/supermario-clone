@@ -1,7 +1,6 @@
 `use strict`
 import Compositor from './Compositor.js'
 import TileCollider from './TileCollider.js'
-import EntityCollider from './EntityCollider.js'
 
 import {
   launch as launchFireworks,
@@ -22,7 +21,6 @@ class Level {
     this.gravity = 1500
     this.totalTime = 0
 
-    this.entityCollider = new EntityCollider(this.entities)
     this.tileCollider = null
 
     this.lvlSpec = lvlSpec
@@ -179,10 +177,6 @@ class Level {
       this.tileCollider.checkY(ent, this)
 
       ent.vel.y += this.gravity * delta
-    })
-
-    this.entities.forEach((ent) => {
-      this.entityCollider.check(ent)
     })
   }
 }

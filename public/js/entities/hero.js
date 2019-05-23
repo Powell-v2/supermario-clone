@@ -5,7 +5,7 @@ import Run from '../traits/Run.js'
 import Stomp from '../traits/Stomp.js'
 import Killable from '../traits/Killable.js'
 
-import { loadSpritesheet } from '../loaders.js'
+import { loadSpritesheet } from '../loaders/helpers.js'
 
 const DRAG_TURBO = 1/5000
 const DRAG_NORMAL = 1/1500
