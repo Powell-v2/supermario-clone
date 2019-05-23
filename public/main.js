@@ -78,6 +78,7 @@ async function main(ctx) {
   }
   lvl.timer.start(0)
 
+  audioControls.prepareSoundsForInitialization()
   setupPlayerSelectors(lvl.init.bind(lvl))
 }
 

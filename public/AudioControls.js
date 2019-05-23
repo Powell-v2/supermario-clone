@@ -14,35 +14,20 @@ export default class AudioControls {
 
     this.sounds = new Map()
     this.loopedSounds = new Map()
-    config.forEach((sound) => {
-      const element = new Audio(`/public/assets/audio/${sound.name}.${sound.format}`)
 
-      if (sound.loop) element.loop = true
-      element.type = `audio/mpeg`
-      element.autoplay = false
-
-      this.sounds.set(sound.name, {
-        audio: element,
-        isMuted: false,
-        ...sound,
-      })
-    })
+    this.config = config
   }
 
   play(name) {
-    const { isMuted, audio, loop } = this.sounds.get(name)
+    const { isMuted, loop, audio } = this.sounds.get(name)
 
     if (isMuted) return
-    if (!audio.paused) return
 
     if (loop && !this.loopedSounds.has(name)) {
       this.loopedSounds.set(name, audio)
-
-      return audio.play()
     }
 
-    const clone = audio.cloneNode()
-    clone.play()
+    audio.play()
   }
 
   muteOne(name) {
@@ -101,6 +86,32 @@ export default class AudioControls {
     muteOffIcon.classList.toggle(`hidden`)
   }
 
+  prepareSoundsForInitialization() {
+    const init = () => {
+      this.config.forEach((sound) => {
+        const audio = new Howl({
+          src: [`/public/assets/audio/${sound.name}.${sound.format}`]
+        })
+
+        if (sound.loop) audio.loop(true)
+
+        this.sounds.set(sound.name, {
+          audio,
+          isMuted: false,
+          ...sound,
+        })
+      })
+
+      document.removeEventListener('touchstart', init, true)
+      document.removeEventListener('touchend', init, true)
+      document.removeEventListener('click', init, true)
+    }
+
+    document.addEventListener('touchstart', init, true);
+    document.addEventListener('touchend', init, true);
+    document.addEventListener('click', init, true);
+  }
+
   setupMuteButton(btn, evType) {
     if (this.isMuteButtonSetup) return
 
@@ -111,12 +122,6 @@ export default class AudioControls {
     ) {
       muteOffIcon.classList.remove(`hidden`)
     }
-
-    // Let the browser know that playback is trusted
-    // by playing a sound on user interaction.
-    const { audio } = this.sounds.get(`coin`)
-    audio.muted = true
-    audio.play()
 
     btn.addEventListener(evType, () => {
       this.isMuted ? this.unmute() : this.mute()

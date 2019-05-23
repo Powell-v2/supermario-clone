@@ -119,8 +119,8 @@ class Level {
 
     if (!this.audioControls.isMuted) {
       // Initial setup.
-      this.audioControls.play(`soundtrack`)
       this.audioControls.setupMuteButton(document.querySelector(`.mute`), ev.type)
+      this.audioControls.play(`soundtrack`)
 
       // On game reset.
       this.audioControls.unmuteOne(`jump`)
