@@ -142,7 +142,6 @@ class Level {
     if (!this.audioControls.isMuted) {
       this.audioControls.muteOne(`jump`)
       this.audioControls.muteOne(`soundtrack`)
-      this.audioControls.unmuteOne(`fireworks`)
     }
 
     let timeoutId1

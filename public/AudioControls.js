@@ -14,26 +14,35 @@ export default class AudioControls {
 
     this.sounds = new Map()
     this.loopedSounds = new Map()
-    config.forEach((sound) => this.sounds.set(sound.name, sound))
+    config.forEach((sound) => {
+      const element = new Audio(`/public/assets/audio/${sound.name}.${sound.format}`)
+
+      if (sound.loop) element.loop = true
+      element.type = `audio/mpeg`
+      element.autoplay = false
+
+      this.sounds.set(sound.name, {
+        audio: element,
+        isMuted: false,
+        ...sound,
+      })
+    })
   }
 
-  play(trackName) {
-    const { name, format, loop, isMuted } = this.sounds.get(trackName)
+  play(name) {
+    const { isMuted, audio, loop } = this.sounds.get(name)
 
     if (isMuted) return
+    if (!audio.paused) return
 
-    const audio = new Audio(`/public/assets/audio/${name}.${format}`)
-
-    audio.type = `audio/mpeg`
-    audio.autoplay = false
-
-    if (loop) {
-      audio.loop = true
-
+    if (loop && !this.loopedSounds.has(name)) {
       this.loopedSounds.set(name, audio)
+
+      return audio.play()
     }
 
-    audio.play()
+    const clone = audio.cloneNode()
+    clone.play()
   }
 
   muteOne(name) {
@@ -54,6 +63,7 @@ export default class AudioControls {
     if (sound.loop) {
       this.loopedSounds.get(name).play()
     }
+
     this.sounds.set(name, {
       ...sound,
       isMuted: false,
@@ -63,9 +73,7 @@ export default class AudioControls {
   mute() {
     this.isMuted = true
 
-    this.loopedSounds.forEach((sound) => {
-      sound.pause()
-    })
+    this.loopedSounds.forEach((sound) => sound.pause())
 
     this.sounds.forEach((sound) => {
       this.sounds.set(sound.name, {
@@ -78,9 +86,7 @@ export default class AudioControls {
   unmute() {
     this.isMuted = false
 
-    this.loopedSounds.forEach((sound) => {
-      sound.play()
-    })
+    this.loopedSounds.forEach((sound) => sound.play())
 
     this.sounds.forEach((sound) => {
       this.sounds.set(sound.name, {
@@ -105,6 +111,12 @@ export default class AudioControls {
     ) {
       muteOffIcon.classList.remove(`hidden`)
     }
+
+    // Let the browser know that playback is trusted
+    // by playing a sound on user interaction.
+    const { audio } = this.sounds.get(`coin`)
+    audio.muted = true
+    audio.play()
 
     btn.addEventListener(evType, () => {
       this.isMuted ? this.unmute() : this.mute()
