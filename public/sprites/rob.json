@@ -1,5 +1,5 @@
 {
-  "imageURL": "/public/assets/rob.png",
+  "imageURL": "/public/assets/heroes/rob.png",
   "frames": [
     {
       "name": "idle",
