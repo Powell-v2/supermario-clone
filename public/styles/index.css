@@ -132,9 +132,6 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
 .mute:focus {
   outline: none;
 }
-[class^="mute--"] {
-  display: absolute;
-}
 .headerInner {
   margin:0 auto;
   text-align:center;
@@ -183,6 +180,7 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   .mute {
     top: .5rem;
     right: .5rem;
+    transform: scale(.75,.75);
   }
 }
 @media screen and (max-width: 768px) {
