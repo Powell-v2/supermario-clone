@@ -94,15 +94,19 @@ class TileCollider {
               { type: undefined },
               lvl
             )
-          }
 
-          if (match.tile.withCoin) {
+            lvl.dashboard.incrementScoreCounter(match.tile.name)
+          }
+          else if (match.tile.withCoin) {
             this.interact(
               match,
               { name: `${match.tile.name}_off` },
               { withCoin: false },
               lvl
             )
+
+            lvl.dashboard.incrementCoinCounter()
+            lvl.dashboard.incrementScoreCounter(match.tile.name)
           }
         }
       }

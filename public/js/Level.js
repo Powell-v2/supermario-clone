@@ -29,6 +29,7 @@ class Level {
     this.entityFactory = entityFactory
 
     this.audioControls = null
+    this.dashboard = null
     this.timer = null
     this.ctx = null
     this.camera = null
@@ -71,6 +72,10 @@ class Level {
 
   reset() {
     this.comp.destroy()
+
+    if (this.dashboard) {
+      this.dashboard.reset()
+    }
 
     this.setupCollision()
     this.setupBackgrounds()
@@ -125,6 +130,8 @@ class Level {
       this.audioControls.unmuteOne(`jump`)
       this.audioControls.unmuteOne(`soundtrack`)
     }
+
+    this.dashboard.init()
   }
 
   end() {

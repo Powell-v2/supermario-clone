@@ -115,14 +115,6 @@ export default class AudioControls {
   setupMuteButton(btn, evType) {
     if (this.isMuteButtonSetup) return
 
-    // Initially both icons are hidden - show mute_off button on game start
-    if (
-      muteOffIcon.classList.contains(`hidden`) &&
-      muteOnIcon.classList.contains(`hidden`)
-    ) {
-      muteOffIcon.classList.remove(`hidden`)
-    }
-
     btn.addEventListener(evType, () => {
       this.isMuted ? this.unmute() : this.mute()
       this.switchIcons()

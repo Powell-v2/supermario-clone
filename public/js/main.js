@@ -1,8 +1,9 @@
 `use strict`
 import AudioControls from './AudioControls.js'
 import Camera from './Camera.js'
-import Timer from './Timer.js'
+import Dashboard from './Dashboard.js'
 import Entity from './Entity.js'
+import Timer from './Timer.js'
 import PlayerController from './traits/PlayerController.js'
 
 import loadEntities from './entities/index.js'
@@ -70,6 +71,7 @@ async function main(ctx) {
   lvl.camera = camera
   lvl.ctx = ctx
   lvl.timer = new Timer()
+  lvl.dashboard = new Dashboard()
 
   lvl.timer.update = function(delta) {
     lvl.update(delta)

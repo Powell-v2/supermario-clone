@@ -34,21 +34,25 @@
 					</div>
 				</div>
 			</div>
+			<section class="dashboard hidden">
+				<p class="score">Score: <span class="score__counter">0000</span></p>
+				<p class="coins">Coins: <span class="coins__counter">0</span></p>
+				<button
+					class="mute"
+					role="switch"
+					aria-checked="false"
+				>
+					<img
+						class="mute--off"
+						src="/public/assets/icons/mute.png"
+					/>
+					<img
+						class="mute--on hidden"
+						src="/public/assets/icons/mute-on.png"
+					/>
+				</button>
+			</section>
   		<canvas id="scene"></canvas>
-			<button
-				class="mute"
-				role="switch"
-				aria-checked="false"
-			>
-				<img
-					class="mute--off hidden"
-					src="/public/assets/icons/mute.png"
-				/>
-				<img
-					class="mute--on hidden"
-					src="/public/assets/icons/mute-on.png"
-				/>
-			</button>
   	</div>
   	<div id="content" class="headerInner">
   		<p>Choose character:</p>
