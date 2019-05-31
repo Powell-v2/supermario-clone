@@ -6,6 +6,23 @@
   font-style: normal;
 }
 
+@keyframes fade_in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade_out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -26,9 +43,6 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   width: 100vw;
   overflow-x: hidden;
 }
-#pageContainer p {
-  /* line-height:100%; */
-}
 #header {
   background-color:#4083c5;
   color:#fff;
@@ -47,22 +61,6 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   left: 0;
   width: 100%;
   height: 100%;
-}
-@keyframes fade_in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade_out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 #gameHolder {
   position: relative;
@@ -128,8 +126,8 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   background-color: transparent;
   padding: 0;
   border: none;
-  top: .5rem;
-  right: .5rem;
+  top: 1rem;
+  right: 1.15rem;
 }
 .mute:focus {
   outline: none;
@@ -141,7 +139,6 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   margin:0 auto;
   text-align:center;
 }
-
 .playerButton {
   background-color:#98bfe6;
   box-sizing:border-box;
@@ -155,7 +152,6 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
   font-size: 1.3rem;
   text-transform: uppercase;
 }
-
 .hidden {
   display: none;
 }
@@ -183,6 +179,10 @@ canvas, #gameHolder, #gameOverlay, .plate__inner {
 @media screen and (max-width: 1024px) {
   .plate {
     width: 45%;
+  }
+  .mute {
+    top: .5rem;
+    right: .5rem;
   }
 }
 @media screen and (max-width: 768px) {
