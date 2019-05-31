@@ -8,7 +8,8 @@ import {
   id as fireworksId,
 } from './effects/fireworks/index.js'
 import { setupKeyboard } from './input.js'
-import { createBackgroundLayer, createSpriteLayer } from './layers.js'
+import createSpriteLayer from './layers/sprite.js'
+import createBackgroundLayer from './layers/background.js'
 import { createGrid } from './loaders/level.js'
 import { createPlayerEnvironment, setupPlayerSelectors } from './main.js'
 import { isMobile } from './utils/browser.js'

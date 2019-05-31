@@ -1,5 +1,5 @@
 `use strict`
-import TileResolver from './TileResolver.js'
+import TileResolver from '../TileResolver.js'
 
 const createBackgroundLayer = (lvl, tiles, sprites) => {
   const tileResolver = new TileResolver(tiles)
@@ -69,86 +69,4 @@ const createBackgroundLayer = (lvl, tiles, sprites) => {
   }
 }
 
-const createSpriteLayer = (entities, width = 64, height = 64) => {
-  const spriteBuff = document.createElement(`canvas`)
-  const spriteBuffCtx = spriteBuff.getContext(`2d`)
-
-  spriteBuff.width = width
-  spriteBuff.height = height
-
-  return function drawSpriteLayer(ctx, cam) {
-    entities.forEach((ent) => {
-      spriteBuffCtx.clearRect(0, 0, width, height)
-
-      ent.draw(spriteBuffCtx)
-
-      ctx.drawImage(
-        spriteBuff,
-        ent.pos.x - cam.pos.x,
-        ent.pos.y - cam.pos.y
-      )
-    })
-  }
-}
-
-const createCollisionLayer = (lvl) => {
-  let resolvedTiles = []
-  const tileResolver = lvl.tileCollider.tiles
-  const { tileSize } = tileResolver
-
-  const getByIndexOrig = tileResolver.getByIndex
-  tileResolver.getByIndex = function getByIndexFake(x, y) {
-    resolvedTiles.push({ x, y })
-
-    return getByIndexOrig.call(tileResolver, x, y)
-  }
-
-  return function drawCollisionRects(ctx, cam) {
-    ctx.strokeStyle = `green`
-    resolvedTiles.forEach(({ x, y }) => {
-      ctx.beginPath()
-      ctx.rect(
-        x * tileSize - cam.pos.x,
-        y * tileSize - cam.pos.y,
-        tileSize,
-        tileSize
-      )
-      ctx.stroke()
-    })
-
-    ctx.strokeStyle = `red`
-    lvl.entities.forEach(({ bounds, size }) => {
-      ctx.beginPath()
-      ctx.rect(
-        bounds.left - cam.pos.x,
-        bounds.top - cam.pos.y,
-        size.x,
-        size.y
-      )
-      ctx.stroke()
-    })
-
-    resolvedTiles.length = 0
-  }
-}
-
-function createCameraLayer(camToDraw) {
-  return function drawCameraRect(ctx, fromCam) {
-    ctx.strokeStyle = `lime`
-    ctx.beginPath()
-    ctx.rect(
-      camToDraw.pos.x - fromCam.pos.x,
-      camToDraw.pos.y - fromCam.pos.y,
-      camToDraw.size.x,
-      camToDraw.size.y
-    )
-    ctx.stroke()
-  }
-}
-
-export {
-  createBackgroundLayer,
-  createSpriteLayer,
-  createCollisionLayer,
-  createCameraLayer,
-}
+export default createBackgroundLayer
