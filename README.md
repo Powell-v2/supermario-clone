@@ -1,4 +1,4 @@
-# supermario-clone
+# Liberty Games Arcade - 'Meet The Team' done interactively!
 2D platformer with 8-bit feel inspired by an all-time classic: Super Mario Bros.
 
 Gameplay demo video:
